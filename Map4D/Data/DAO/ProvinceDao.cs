@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Map4D.Data.Dao
+namespace Map4D.Data.DAO
 {
-    public class Province:AdoHelper
+    public class ProvinceDao:AdoHelper
     {
         AdoHelper helper = null;
-        public Province()
+        public ProvinceDao()
         {
             string connection = AdoHelper.ConnectionString;
             helper = new AdoHelper(connection);

@@ -126,7 +126,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Data\Dao\Province.cs" />
+    <Compile Include="Data\DAO\ProvinceDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -175,8 +175,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Data\Bo\" />
-    <Folder Include="Models\" />
+    <Folder Include="Data\BO\" />
     <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
