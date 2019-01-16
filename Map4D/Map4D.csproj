@@ -139,6 +139,7 @@
     <Compile Include="Models\ThongTinVeDoiTuongViewModel.cs" />
     <Compile Include="Helper\AdoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DrawPolygonViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\materialize.css" />
