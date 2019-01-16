@@ -36,5 +36,14 @@ namespace Map4D.Data.BO
         {
             return provinceDao.GetAllWardByDistrict(IdDistrict);
         }
+        /// <summary>
+        /// Get dữ liệu đối tượng từ Value thông tin đối tượng phụ
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        public string getDuLieuDoiTuongByCode(string Value)
+        {
+            return provinceDao.getDuLieuDoiTuongByCode(Value);
+        }
     }
 }

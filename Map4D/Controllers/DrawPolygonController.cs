@@ -66,5 +66,9 @@ namespace Map4D.Controllers
                 data = listWard
             },JsonRequestBehavior.AllowGet);
         }
+        public string DuLieuDoiTuong(string Code)
+        {
+            return drawPolygonBo.getDuLieuDoiTuongByCode(Code);
+        }
     }
 }

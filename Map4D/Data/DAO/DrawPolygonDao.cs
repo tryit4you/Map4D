@@ -105,5 +105,40 @@ namespace Map4D.Data.DAO
             reader.Close();
             return listWard;
         }
+        private string getIdThongTinDoiTuongChinh(string Value)
+        {
+            string IdThongTinDoiTuongChinh = "";
+            string sqlQuery = "SELECT ThongTinDoiTuongChinh.Id " +
+                              "FROM ThongTinDoiTuongPhu INNER JOIN ThongTinDoiTuongChinh " +
+                              "ON ThongTinDoiTuongPhu.ThongTinDoiTuongChinhId = ThongTinDoiTuongChinh.Id " +
+                              "WHERE ThongTinDoiTuongPhu.[Value] = '" + Value + "'";
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            if (reader.Read())
+            {
+                IdThongTinDoiTuongChinh = reader["Id"].ToString();
+            }
+            reader.Close();
+            return IdThongTinDoiTuongChinh;
+        }
+        private string getDuLieuDoiTuong(string IdThongTinDoiTuongChinh)
+        {
+            string DuLieuDoiTuong = "[]";
+            string sqlQuery = "SELECT ThongTinVeDoiTuong.DuLieuDoiTuong " +
+                              "FROM ThongTinVeDoiTuong " +
+                              "WHERE ThongTinVeDoiTuong.ThongTinDoiTuongChinhId = '" + IdThongTinDoiTuongChinh +"'";
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            if (reader.Read())
+            {
+                DuLieuDoiTuong = reader["DuLieuDoiTuong"].ToString();
+            }
+            reader.Close();
+            return DuLieuDoiTuong;
+        }
+        public string getDuLieuDoiTuongByCode(string Value)
+        {
+            string IdThongTinDoiTuongChinh = getIdThongTinDoiTuongChinh(Value);
+            string DuLieuDoiTuong = getDuLieuDoiTuong(IdThongTinDoiTuongChinh);
+            return DuLieuDoiTuong;
+        }
     }
 }
