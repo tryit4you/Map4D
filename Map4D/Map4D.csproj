@@ -130,6 +130,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CountriesViewModel.cs" />
+    <Compile Include="Models\ThongTinDoiTuongChinhViewModel.cs" />
+    <Compile Include="Models\ThongTinDoiTuongPhuViewModel.cs" />
+    <Compile Include="Models\ThongTinLatLngDoiTuongViewModel.cs" />
+    <Compile Include="Models\ThongTinVeDoiTuongViewModel.cs" />
     <Compile Include="Helper\AdoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
