@@ -127,7 +127,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DrawPolygonController.cs" />
-    <Compile Include="Data\DAO\ProvinceDao.cs" />
     <Compile Include="Data\BO\DrawPolygonBo.cs" />
     <Compile Include="Data\DAO\DrawPolygonDao.cs" />
     <Compile Include="Global.asax.cs">
@@ -191,8 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Data\BO\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Views\Login\" />
     <Folder Include="Views\TestGet\" />
   </ItemGroup>
