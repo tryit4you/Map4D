@@ -1,37 +1,55 @@
-﻿
+﻿@model Map4D.ViewModels.DrawPolygonViewModels
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="col s4">
-    <ul id="metismenu">
-        <li class="mm-active">
-            <a href="#" aria-expanded="true">Đà nẵng</a>
-            <ul>
-                <li>
-                    <a href="#" aria-="true">Hải châu</a>
-                </li>
+<div class="row">
+    @if (Model.Cities != null)
+    {
+        <div class="col s2">
+            <ul id="metismenu">
+                @foreach (var city in Model.Cities)
+                {
+                    <li class="mm-active">
+                        <a href="?cityId=@city.Id" aria-expanded="true">@city.Name</a>
 
-                <li>
-                    <a href="#" aria-="true">Liên chiểu</a>
-                </li>
-                <li>
-                    <a href="#" aria-="true">Hòa khánh</a>
-                </li>
+                    </li>
+                }
             </ul>
-        </li>
-        <li>
-            <a href="#" aria-expanded="false">Menu 2</a>
-            <ul>
-                <li>
+        </div>
+    }
+    @if (Model.Districts != null)
+    {
+        <div class="col s2">
+            <ul id="metismenu">
+                @foreach (var district in Model.Districts)
+                {
+                    <li class="mm-active">
+                        <a href="?cityId=@Model.CurrentCityId&districtId=@district.Id" aria-expanded="true">@district.Name</a>
 
-                    <a href="#" aria-="true">Menu 1</a>
-                </li>
+                    </li>
+                }
             </ul>
-        </li>
-        ...
-    </ul>
+        </div>
+    }
+    @if (Model.Wards != null)
+    {
+        <div class="col s2">
+            <ul id="metismenu">
+                @foreach (var ward in Model.Wards)
+                {
+                    <li class="mm-active">
+                        <a href="#" aria-expanded="true">@ward.Name</a>
+
+                    </li>
+                }
+
+            </ul>
+        </div>
+    }
+
 </div>
+
 @section scripts{
 
     <script src="~/Assets/js/drawpolygon.js"></script>

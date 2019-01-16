@@ -127,6 +127,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DrawPolygonController.cs" />
+    <Compile Include="Data\BO\DrawPolygonBo.cs" />
+    <Compile Include="Data\DAO\DrawPolygonDao.cs" />
     <Compile Include="Data\DAO\ProvinceDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -138,6 +140,7 @@
     <Compile Include="Models\ThongTinVeDoiTuongViewModel.cs" />
     <Compile Include="Helper\AdoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DrawPolygonViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\materialize.css" />
@@ -189,8 +192,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Data\BO\" />
     <Folder Include="Views\Login\" />
+    <Folder Include="Views\TestGet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
