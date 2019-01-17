@@ -46,7 +46,7 @@ namespace Map4D.Controllers
         public ActionResult GetShapesByCode(string code)
         {
 
-            var shapes = drawPolygonBo.GetAllShapesByCode(code);
+            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
             return Json(new
             {
                 data=shapes
