@@ -9,7 +9,6 @@
     <link href="/assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link href="~/Assets/css/metisMenu.min.css" rel="stylesheet" />
     <link href="/assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <link href="~/Assets/css/leaflet.css" rel="stylesheet" />
 </head>
 <body>
     <nav class="light-blue lighten-1" role="navigation">
@@ -44,7 +43,7 @@
     <script src="/assets/js/materialize.js"></script>
     <script src="/assets/js/mustache.min.js"></script>
     <script src="~/Assets/js/metisMenu.min.js"></script>
-    <script src="~/Assets/js/leaflet.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqrkhwhFraSN0bNM1JXknfKhRgW1hea7g&callback=initialize" type="text/javascript"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
