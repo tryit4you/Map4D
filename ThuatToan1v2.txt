@@ -1,0 +1,14 @@
+﻿Thuật toán câu 1:
+- getAllCity: get tất cả các row có Level = 1 ở bảng countries
+- getDistrictByCity: get các row có ParentId = IdCity
+- getWardByDistrict: get các row có ParentId  = IdDistrict
+- getDuLieuDoiTuong:
++ 1: get IdThongTinhDoiTuongChinh theo Code Countries đang cần vẽ bằng việc nối 2 bảng ThongTinDoiTuongChinh và ThongTinDoiTuongPhu điều kiện ThongTinDoiTuongPhu.[Value] = Code
++ 2: get DuLieuDoiTuong từ bảng ThongTinVeDoiTuong theo IdThongTinDoiTuongChinh vừa tìm được ThongTinVeDoiTuong.ThongTinDoiTuongChinhId = IdThongTinhDoiTuongChinh
+
+Thuật toán câu 2:
+- Có 1 điểm: Lat,Lng
+- Tìm điểm đó thuộc vào ThongTinLatLngDoiTuong nào => có được IdThongTinLatLngDoiTuong
+- Tìm ThongTinDoiTuongChinh ứng với IdThongTinLatLngDoiTuong vừa có => có được code DiaGioiHanhChinh, get Ten được xã/phường
+- Tìm được quận/huyện tương ứng thông qua code DiaGioiHanhChinh tìm ở bản countries (DiaGioiHanhChinh = Code)
+- Bỏ đi 3 kí tự cuối của Code tìm được tỉnh/thành phố ứng với Code mới ở bảng countries
