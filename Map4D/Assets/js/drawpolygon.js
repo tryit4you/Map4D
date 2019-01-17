@@ -1,6 +1,6 @@
 ﻿$(function () {
     register();
-    getListCity();
+
 });
 function register() {
     $('#metismenu').metisMenu({
@@ -11,25 +11,30 @@ function register() {
         var code = $(this).data('id');
         drawPolygon(code);
     });
+    
 }
 function drawPolygon(code) {
+    var map = L.map('map', {
+        center: [51.505, -0.09],
+        zoom: 13
+    });
     $.ajax({
         url: '/drawpolygon/GetShapesByCode',
         data: { code: code },
         type: 'post',
         dataType: 'json',
         success: function (res) {
-            var data = res.data;
-            if (data.length !== 0) {
-                console.log(data);
-                L.geoJSON(data, {
-                    style: function (feature) {
-                        return { color: feature.properties.color };
-                    }
-                }).bindPopup(function (layer) {
-                    return layer.feature.properties.description;
-                }).addTo(map);
-            }
+
+
+            console.log(res.data);
+            L.geoJSON(res.data, {
+                style: function (feature) {
+                    return { color: feature.properties.color };
+                }
+            }).bindPopup(function (layer) {
+                return layer.feature.properties.description;
+            }).addTo(map);
+
         }
     });
 }

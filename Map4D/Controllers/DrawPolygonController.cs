@@ -1,6 +1,7 @@
 ﻿using Map4D.Data.BO;
 using Map4D.Models;
 using Map4D.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,10 +45,11 @@ namespace Map4D.Controllers
         }
         public ActionResult GetShapesByCode(string code)
         {
+
             var shapes = drawPolygonBo.GetAllShapesByCode(code);
             return Json(new
             {
-                data = shapes
+                data=shapes
             },JsonRequestBehavior.AllowGet);
         }
         public JsonResult ListCity()
@@ -74,9 +76,6 @@ namespace Map4D.Controllers
                 data = listWard
             },JsonRequestBehavior.AllowGet);
         }
-        public string DuLieuDoiTuong(string Code)
-        {
-            return drawPolygonBo.getDuLieuDoiTuongByCode(Code);
-        }
+        
     }
 }
