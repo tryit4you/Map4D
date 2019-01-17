@@ -11,7 +11,7 @@ namespace Map4D.Controllers
 {
     public class PolygonDetailController : Controller
     {
-        private PolygonDetailBo polygonDetailBo = new PolygonDetailBo();
+        private PolygonDetailBo polygonDetail = new PolygonDetailBo();
         // GET: PolygonDetail
         public ActionResult Index()
         {
