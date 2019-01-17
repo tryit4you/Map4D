@@ -34,6 +34,7 @@ namespace Map4D.Data.DAO
                 {
                     Id = int.Parse(reader["Id"].ToString()),
                     Name = reader["Name"].ToString(),
+                    Code = reader["Code"].ToString(),
                     Description = reader["Description"].ToString(),
                     Level = int.Parse(reader["Level"].ToString()),
                     Type = reader["Type"].ToString(),
@@ -62,6 +63,7 @@ namespace Map4D.Data.DAO
                 CountriesViewModel District = new CountriesViewModel
                 {
                     Id = int.Parse(reader["Id"].ToString()),
+                    Code = reader["Code"].ToString(),
                     Name = reader["Name"].ToString(),
                     Description = reader["Description"].ToString(),
                     Level = int.Parse(reader["Level"].ToString()),
@@ -91,6 +93,7 @@ namespace Map4D.Data.DAO
                 CountriesViewModel Ward = new CountriesViewModel
                 {
                     Id = int.Parse(reader["Id"].ToString()),
+                    Code=reader["Code"].ToString(),
                     Name = reader["Name"].ToString(),
                     Description = reader["Description"].ToString(),
                     Level = int.Parse(reader["Level"].ToString()),
