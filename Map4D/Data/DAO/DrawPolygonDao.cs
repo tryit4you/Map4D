@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Map4D.Data.DAO
 {
-    public class DrawPolygonDao:AdoHelper
+    public class DrawPolygonDao : AdoHelper
     {
         private AdoHelper helper = null;
         /// <summary>
@@ -104,6 +104,31 @@ namespace Map4D.Data.DAO
             }
             reader.Close();
             return listWard;
+        }
+        private List<string> GetListIdByCode(string code)
+        {
+            List<string> Ids = new List<string>();
+            string queryListId = $"select Id from  ThongTinDoiTuongChinh WHERE DiaGioiHanhChinhCode={code}";
+            SqlDataReader reader = helper.ExecDataReader(queryListId);
+            while (reader.Read())
+            {
+                Ids.Add(reader["Id"].ToString());
+            }
+            reader.Close();
+            return Ids;
+        }
+        public List<string> GetShapeByCode(string code)
+        {
+            List<string> shapes = new List<string>();
+            var query = $"EXEC GetAllShapJsonByDiaGioiHanhChinhCode '{code}'";
+            SqlDataReader reader = helper.ExecDataReader(query);
+            while (reader.Read())
+            {
+                shapes.Add(reader["ObjectShape"].ToString());
+            }
+            reader.Close();
+
+            return shapes;
         }
     }
 }

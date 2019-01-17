@@ -9,14 +9,14 @@ namespace Map4D.Data.BO
 {
     public class DrawPolygonBo
     {
-        private DrawPolygonDao provinceDao = new DrawPolygonDao();
+        private DrawPolygonDao drawPolygonDao = new DrawPolygonDao();
         /// <summary>
         /// Get all City in VietNam
         /// </summary>
         /// <returns>List<CountriesViewModel></returns>
         public List<CountriesViewModel> GetAllCity()
         {
-            return provinceDao.GetAllCity();
+            return drawPolygonDao.GetAllCity();
         }
         /// <summary>
         /// Get all District by City
@@ -25,7 +25,7 @@ namespace Map4D.Data.BO
         /// <returns>List<CountriesViewModel></returns>
         public List<CountriesViewModel> GetAllDistrictByCity(int IdCity)
         {
-            return provinceDao.GetAllDistrictByCity(IdCity);
+            return drawPolygonDao.GetAllDistrictByCity(IdCity);
         }
         /// <summary>
         /// Get all Ward by District
@@ -34,7 +34,16 @@ namespace Map4D.Data.BO
         /// <returns>List<CountriesViewModel></returns>
         public List<CountriesViewModel> GetAllWardByDistrict(int IdDistrict)
         {
-            return provinceDao.GetAllWardByDistrict(IdDistrict);
+            return drawPolygonDao.GetAllWardByDistrict(IdDistrict);
+        }
+        /// <summary>
+        /// Get all ShapeByCode
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns>List<CountriesViewModel></returns>
+        public List<string> GetAllShapesByCode(string code)
+        {
+            return drawPolygonDao.GetShapeByCode(code);
         }
     }
 }

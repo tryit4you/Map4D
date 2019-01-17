@@ -42,6 +42,14 @@ namespace Map4D.Controllers
             };
             return View(DrawPolygonViewModel);
         }
+        public ActionResult GetShapesByCode(string code)
+        {
+            var shapes = drawPolygonBo.GetAllShapesByCode(code);
+            return Json(new
+            {
+                data = shapes
+            },JsonRequestBehavior.AllowGet);
+        }
         public JsonResult ListCity()
         {
             var listCity = drawPolygonBo.GetAllCity();
