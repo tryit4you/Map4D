@@ -52,7 +52,7 @@ namespace Map4D.Data.BO
         /// <returns></returns>
         public string getDuLieuDoiTuongByCode(string Value)
         {
-            return provinceDao.getDuLieuDoiTuongByCode(Value);
+            return drawPolygonDao.getDuLieuDoiTuongByCode(Value);
         }
     }
 }
