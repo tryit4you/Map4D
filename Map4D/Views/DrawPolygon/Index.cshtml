@@ -4,55 +4,38 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
-    @if (Model.Cities != null)
-    {
-        <div class="col s2">
-            <ul id="metismenu">
-                @foreach (var city in Model.Cities)
-                {
-                    <li class="mm-active">
-                        <a href="?cityId=@city.Id" class="polygonItems" data-id="@city.Code" aria-expanded="true">@city.Name</a>
-
-                    </li>
-                }
-            </ul>
-        </div>
-    }
-    @if (Model.Districts != null)
-    {
-        <div class="col s2">
-            <ul id="metismenu">
-                @foreach (var district in Model.Districts)
-                {
-                    <li class="mm-active">
-                        <a href="?cityId=@Model.CurrentCityId&districtId=@district.Id" class="polygonItems" data-id="@district.Code" aria-expanded="true">@district.Name</a>
-
-                    </li>
-                }
-            </ul>
-        </div>
-    }
-    @if (Model.Wards != null)
-    {
-        <div class="col s2">
-            <ul id="metismenu">
-                @foreach (var ward in Model.Wards)
-                {
-                    <li class="mm-active">
-                        <a href="#" aria-expanded="true" class="polygonItems" data-id="@ward.Code">@ward.Name</a>
-
-                    </li>
-                }
-
-            </ul>
-        </div>
-    }
+    <div class="col s2 ">
+        <ul id="cities"></ul>
+    </div>
+    <div class="col s2 ">
+        <ul id="dictricts"></ul>
+    </div>
+    <div class="col s2 ">
+        <ul id="wards"></ul>
+    </div>
+    <div class="col-6">
+        <h4>Vị trí hiển thị bản đồ</h4>
+    </div>
 
 </div>
-<div class="row">
-<div class="map"></div>
 
-</div>
+
+
+<script id="city-template" type="x-tmpl-mustache">
+    <li class="mm-active">
+        <a href="#" aria-expanded="true" class="polygonItems" data-city="{{cityId}}" data-id="{{code}}">{{name}}</a>
+    </li>
+</script>
+<script id="dictrict-template" type="x-tmpl-mustache">
+    <li class="mm-active">
+        <a href="#" aria-expanded="true" class="polygonItems-dictrict" data-dictrict="{{dictrictId}}" data-id="{{code}}">{{name}}</a>
+    </li>
+</script>
+<script id="ward-template" type="x-tmpl-mustache">
+    <li class="mm-active">
+        <a href="#" aria-expanded="true" class="polygonItems-ward" data-ward="{{wardId}}"  data-id="{{code}}">{{name}}</a>
+    </li>
+</script>
 @section scripts{
 
     <script src="~/Assets/js/drawpolygon.js"></script>

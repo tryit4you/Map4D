@@ -14,7 +14,7 @@ namespace Map4D.Controllers
     {
         private DrawPolygonBo drawPolygonBo = new DrawPolygonBo();
         // GET: DrawPolygon
-        public ActionResult Index(string cityId,string districtId)
+        public ActionResult Index(string cityId,string districtId,string code)
         {
             string currentCityId=string.Empty;
             string currentDistrictId=string.Empty;
@@ -31,6 +31,10 @@ namespace Map4D.Controllers
                 currentDistrictId = districtId;
                 listWards = drawPolygonBo.GetAllWardByDistrict(int.Parse(districtId));
             }
+            if (code!=null)
+            {
+                var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
+            }
 
             var listCity = drawPolygonBo.GetAllCity();
             var DrawPolygonViewModel = new DrawPolygonViewModels
@@ -46,34 +50,49 @@ namespace Map4D.Controllers
         public ActionResult GetShapesByCode(string code)
         {
 
-            var shapes = drawPolygonBo.GetAllShapesByCode(code);
+            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
             return Json(new
             {
                 data=shapes
             },JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ListCity()
+        public JsonResult ListCity(string code)
         {
             var listCity = drawPolygonBo.GetAllCity();
+            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
             return Json(new
             {
+                shapes=shapes,
                 data = listCity
             },JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ListDistrict(string cityId)
+        public JsonResult ListDictrict(string cityId,string code)
         {
             var listDistrict = drawPolygonBo.GetAllDistrictByCity(int.Parse(cityId));
+            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
             return Json(new
             {
+                shapes=shapes,
                 data = listDistrict
             },JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ListWard(string districtId)
+        public JsonResult ListWard(string dictrictId, string code)
         {
-            var listWard = drawPolygonBo.GetAllWardByDistrict(int.Parse(districtId));
+            
+            var listWard = drawPolygonBo.GetAllWardByDistrict(int.Parse(dictrictId));
+            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
             return Json(new
             {
+                shapes=shapes,
                 data = listWard
+            },JsonRequestBehavior.AllowGet);
+        } public JsonResult getward(string code)
+        {
+            
+            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
+            return Json(new
+            {
+                shapes=shapes,
             },JsonRequestBehavior.AllowGet);
         }
         
