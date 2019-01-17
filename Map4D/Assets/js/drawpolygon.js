@@ -7,7 +7,7 @@ function register() {
         toggle: false
     });
     $('.polygonItems').off('click').on('click', function (e) {
-        e.preventDefault();
+        //e.preventDefault();
         var code = $(this).data('id');
         var cityId = $(this).data('city');
         dictrict(cityId, code);
