@@ -128,7 +128,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DrawPolygonController.cs" />
     <Compile Include="Controllers\PolygonDetailController.cs" />
-    <Compile Include="Data\BO\PolygonDetailBo.cs" />
     <Compile Include="Data\BO\DrawPolygonBo.cs" />
     <Compile Include="Data\BO\PolygonDetailBo.cs" />
     <Compile Include="Data\DAO\DrawPolygonDao.cs" />
