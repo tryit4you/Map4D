@@ -33,20 +33,17 @@ function getPolygonDetail(lat, lng) {
         },
         type: 'post',
         dataType: 'json',
-        success: function (res) {
-            console.log(res.message);
+        success: function (res) { 
+            
         }
     });
 }
 
-function drawPolygon(shapes) {
+function drawPolygon(shapes, pointCenter) {
     var jsonObj = JSON.parse(shapes);
     var draw = new L.GeoJSON(jsonObj);
     map.leaflet.addLayer(draw);
-    L.map('xinkciti-map', {
-        center: [draw, draw.lat],
-        zoom: 13
-    });
+   // L.setView([pointCenter.Lng, pointCenter.Lat], 13); 
 }
 function register() {
 
@@ -169,7 +166,8 @@ function getShapes(code) {
         dataType: 'json',
         success: function (res) {
             var shapes = res.shapes;
-            drawPolygon(shapes);
+            var pointCenter = res.pointCenter;
+            drawPolygon(shapes, pointCenter);
         }
     });
 }

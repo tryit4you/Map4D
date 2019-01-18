@@ -50,3 +50,10 @@ ul#wards li {
 .active{
     color:red;
 }
+.nav {
+    display: none !important;
+}
+
+.navbar {
+    display: none;
+}

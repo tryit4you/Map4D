@@ -162,6 +162,7 @@
     <Content Include="Assets\css\metisMenu.min.css" />
     <Content Include="Assets\js\metisMenu.min.js" />
     <Content Include="Assets\js\mustache.min.js" />
+    <Content Include="Assets\uploads\leaf-orange.png" />
     <Content Include="Assets\uploads\page-loader.gif" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

@@ -1,5 +1,6 @@
 ﻿using Map4D.Data.DAO;
 using Map4D.Models;
+using Map4D.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,10 @@ namespace Map4D.Data.BO
         public string getDuLieuDoiTuongByCode(string Value)
         {
             return drawPolygonDao.getDuLieuDoiTuongByCode(Value);
+        }
+        public PointViewModel GetPointCenterByCode(string Code)
+        {
+            return drawPolygonDao.GetPointCenterByCode(Code);
         }
     }
 }
