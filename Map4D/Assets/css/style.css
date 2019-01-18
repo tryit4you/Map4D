@@ -53,3 +53,6 @@ ul#wards li {
 .logo {
     display: none !important;
 }
+.navbar {
+    display: none !important;
+}
