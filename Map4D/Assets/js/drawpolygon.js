@@ -48,42 +48,43 @@ function drawPolygon(shapes) {
         zoom: 13
     });
 }
-
 function register() {
-   
 
     $('a.polygonItems').on('click', function () {
         $(this).addClass('active');
     });
+        $('a.polygonItems').on('click', function () {
+            $(this).addClass('active');
+        });
 
-    $('.polygonItems').off('click').on('click', function (e) {
-        $('.polygonItems').removeClass('active');
-        //e.preventDefault();
-        var code = $(this).data('id');
-        var cityId = $(this).data('city');
-        $(this).addClass('active');
-        $('#wards').html('');
-        getShapes(code);
-        dictrict(cityId);
-    });
-    $('.polygonItems-dictrict').off('click').on('click', function (e) {
-        $('.polygonItems-dictrict').removeClass('active');
-        e.preventDefault();
-        var code = $(this).data('id');
-        $(this).addClass('active');
-        var dictrictId = $(this).data('dictrict');
-        getShapes(code);
-        ward(dictrictId);
-    });
-    $('.polygonItems-ward').off('click').on('click', function (e) {
-        $('.polygonItems-ward').removeClass('active');
-        e.preventDefault();
-        $(this).addClass('active');
-        var code = $(this).data('id');
-        getShapes(code);
-    });
-    
-}
+        $('.polygonItems').off('click').on('click', function (e) {
+            $('.polygonItems').removeClass('active');
+            //e.preventDefault();
+            var code = $(this).data('id');
+            var cityId = $(this).data('city');
+            $(this).addClass('active');
+            $('#wards').html('');
+            getShapes(code);
+            dictrict(cityId);
+        });
+        $('.polygonItems-dictrict').off('click').on('click', function (e) {
+            $('.polygonItems-dictrict').removeClass('active');
+            e.preventDefault();
+            var code = $(this).data('id');
+            $(this).addClass('active');
+            var dictrictId = $(this).data('dictrict');
+            getShapes(code);
+            ward(dictrictId);
+        });
+        $('.polygonItems-ward').off('click').on('click', function (e) {
+            $('.polygonItems-ward').removeClass('active');
+            e.preventDefault();
+            $(this).addClass('active');
+            var code = $(this).data('id');
+            getShapes(code);
+        });
+
+    }
 
 function cities() {
     $.ajax({
@@ -106,7 +107,6 @@ function cities() {
         }
     });
 }
-
 function dictrict(cityId) {
     $.ajax({
         url: '/drawpolygon/listdictrict',
@@ -133,7 +133,6 @@ function dictrict(cityId) {
         }
     });
 }
-
 function ward(dictrictId) {
     $.ajax({
         url: '/drawpolygon/ListWard',
