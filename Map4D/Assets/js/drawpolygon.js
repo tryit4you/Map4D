@@ -1,8 +1,14 @@
-﻿var map;
+﻿$(document).ready(function () {
+    $("#hide-popup").click(function () {
+        $("#popup").hide();
+    });
+});
+var map;
 $(function () {
     register();
     cities();
     loadCenter(16.036918, 108.218510);
+    $("#popup").hide();
 
 });
 function loadCenter(lat,lng,message) {
@@ -44,7 +50,7 @@ function getPolygonDetail(lat, lng) {
         dataType: 'json',
         success: function (res) {
             console.log(res.message);
-            var message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;' src='/Assets/uploads/no-street-view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
+            var message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;' src='/Assets/uploads/view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
             loadCenter(lat, lng, message);
         }
     });
@@ -59,12 +65,9 @@ function drawPolygon(shapes, pointCenter) {
     
 }
 function register() {
-
-    $('a.polygonItems').on('click', function () {
-        $(this).addClass('active');
-    });
         $('a.polygonItems').on('click', function () {
             $(this).addClass('active');
+
         });
 
         $('.polygonItems').off('click').on('click', function (e) {
@@ -76,6 +79,7 @@ function register() {
             $('#wards').html('');
             getShapes(code);
             dictrict(cityId);
+            $("#popup").show();
         });
         $('.polygonItems-dictrict').off('click').on('click', function (e) {
             $('.polygonItems-dictrict').removeClass('active');
@@ -96,6 +100,19 @@ function register() {
 
     }
 
+function getDetail(code) {
+    $.ajax({
+        url: '/drawpolygon/GetDetailObject',
+        type: 'post',
+        data: {code:code},
+        dataType: 'json',
+        success: function (res) {
+            var html = res.htmlCode;
+            $('#cities').html(html);
+            register();
+        }
+    });
+}
 function cities() {
     $.ajax({
         url: '/drawpolygon/listcity',

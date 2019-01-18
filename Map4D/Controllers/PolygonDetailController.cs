@@ -21,8 +21,15 @@ namespace Map4D.Controllers
             return Json(new
             {
                 details
+            }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetDetailObject(string code)
+        {
+            string details = polygonDetail.GetPopupHtmlByCode(code);
+            return Json(new
+            {
+                htmlCode = details
             },JsonRequestBehavior.AllowGet);
         }
-
     }
 }
