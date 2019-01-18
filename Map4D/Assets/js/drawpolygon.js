@@ -25,7 +25,13 @@ function loadCenter(lat,lng,message) {
     map = MapGL.initMap("xinkciti-map", paramMap);
     map.leaflet.on('click', function (e) {
         getPolygonDetail(e.latlng.lat, e.latlng.lng);
-    }); 
+    });
+    if (message !== undefined) {
+        L.popup()
+            .setLatLng([lat, lng])
+            .setContent(message)
+            .openOn(map.leaflet);
+    }
 }
 function getPolygonDetail(lat, lng) {
     $.ajax({
@@ -38,7 +44,7 @@ function getPolygonDetail(lat, lng) {
         dataType: 'json',
         success: function (res) {
             console.log(res.message);
-            var message = res.details.City + "-" + res.details.Dictrict + "-" + res.details.Ward;
+            var message = res.details.Ward + "-" + res.details.District + "-" + res.details.City;
             loadCenter(lat, lng, message);
         }
     });
