@@ -51,7 +51,7 @@ namespace Map4D.Data.BO
         /// </summary>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public string getDuLieuDoiTuongByCode(string Value)
+        public string GetDuLieuDoiTuongByCode(string Value)
         {
             return drawPolygonDao.getDuLieuDoiTuongByCode(Value);
         }

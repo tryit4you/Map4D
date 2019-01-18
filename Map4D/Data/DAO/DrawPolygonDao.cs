@@ -109,7 +109,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return listWard;
         }
-        public string getDuLieuDoiTuongByCode(string Code)
+        public string GetDuLieuDoiTuongByCode(string Code)
         {
             string DuLieuDoiTuong = "[]";
             string sqlQuery = "EXEC GetDuLieuDoiTuongByCode @Code = '" + Code + "'";
