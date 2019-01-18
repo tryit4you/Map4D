@@ -162,6 +162,7 @@
     <Content Include="Assets\css\metisMenu.min.css" />
     <Content Include="Assets\js\metisMenu.min.js" />
     <Content Include="Assets\js\mustache.min.js" />
+    <Content Include="Assets\uploads\city.jpg" />
     <Content Include="Assets\uploads\page-loader.gif" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -173,7 +174,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Assets\uploads\alltrees.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

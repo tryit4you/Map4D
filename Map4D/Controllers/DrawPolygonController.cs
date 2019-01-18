@@ -15,38 +15,9 @@ namespace Map4D.Controllers
     {
         private DrawPolygonBo drawPolygonBo = new DrawPolygonBo();
         // GET: DrawPolygon
-        public ActionResult Index(string cityId,string districtId,string code)
+        public ActionResult Index()
         {
-            string currentCityId=string.Empty;
-            string currentDistrictId=string.Empty;
-
-            IEnumerable<CountriesViewModel> listDistricts=null;
-            IEnumerable<CountriesViewModel> listWards=null;
-            if (cityId!=null)
-            {
-                currentCityId = cityId;
-                listDistricts = drawPolygonBo.GetAllWardByDistrict(int.Parse(cityId));
-            }
-            if (districtId != null)
-            {
-                currentDistrictId = districtId;
-                listWards = drawPolygonBo.GetAllWardByDistrict(int.Parse(districtId));
-            }
-            if (code!=null)
-            {
-                var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
-            }
-
-            var listCity = drawPolygonBo.GetAllCity();
-            var DrawPolygonViewModel = new DrawPolygonViewModels
-            {
-                CurrentCityId=currentCityId,
-                CurrentDistrictId=currentDistrictId,
-                Cities = listCity,
-                Districts = listDistricts,
-                Wards = listWards,
-            };
-            return View(DrawPolygonViewModel);
+            return View();
         }
         public ActionResult GetShapesByCode(string code)
         {
