@@ -93,6 +93,8 @@ namespace Map4D.Controllers
         }
         public JsonResult GetShapes(string code)
         {
+            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
+            PointViewModel pointCenter = drawPolygonBo.GetPointCenterByCode(code);
             string shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
             PointViewModel pointCenter= drawPolygonBo.GetPointCenterByCode(code);
             return Json(new

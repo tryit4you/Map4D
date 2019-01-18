@@ -1,10 +1,15 @@
-﻿$(function () {
+﻿var map;
+$(function () {
     register();
     cities();
+    loadCenter(16.036918, 108.218510);
+
+});
+function loadCenter(lat,lng,message) {
     var paramMapDefault = {
-        lat: 10.167615,
-        lng: 106.411514,
-        zoom: 11,
+        lat: lat,
+        lng: lng,
+        zoom: 8,
         mode: "2d"
     };
     paramMap = {
@@ -20,10 +25,8 @@
     map = MapGL.initMap("xinkciti-map", paramMap);
     map.leaflet.on('click', function (e) {
         getPolygonDetail(e.latlng.lat, e.latlng.lng);
-        console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-    });
-
-});
+    }); 
+}
 function getPolygonDetail(lat, lng) {
     $.ajax({
         url: '/polygondetail/GetDetailByLatLng',
@@ -33,17 +36,20 @@ function getPolygonDetail(lat, lng) {
         },
         type: 'post',
         dataType: 'json',
-        success: function (res) { 
-            
+        success: function (res) {
+            console.log(res.message);
+            var message = res.details.City + "-" + res.details.Dictrict + "-" + res.details.Ward;
+            loadCenter(lat, lng, message);
         }
     });
 }
 
-function drawPolygon(shapes, pointCenter) {
+function drawPolygon(shapes) {
     var jsonObj = JSON.parse(shapes);
     var draw = new L.GeoJSON(jsonObj);
     map.leaflet.addLayer(draw);
-   // L.setView([pointCenter.Lng, pointCenter.Lat], 13); 
+    
+    
 }
 function register() {
 
