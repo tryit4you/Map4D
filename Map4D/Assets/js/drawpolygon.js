@@ -59,22 +59,16 @@ function drawPolygon(shapes, pointCenter) {
 
 }
 function register() {
-
-    $('.modal').modal();
-    $('a.polygonItems').on('click', function () {
-        $(this).addClass('active');
-    });
-    $('a.polygonItems').on('click', function () {
-        $(this).addClass('active');
-    });
-
+  
     $('.polygonItems').off('click').on('click', function (e) {
         $('.polygonItems').removeClass('active');
         //e.preventDefault();
         var code = $(this).data('id');
         var cityId = $(this).data('city');
         $(this).addClass('active');
-        $('#wards').html('');
+        var city = $('a.polygonItems.active').html();
+        showModelDetail(city);
+        $('#modalDetail').modal('show');
         getShapes(code);
         dictrict(cityId);
     });
@@ -84,6 +78,8 @@ function register() {
         var code = $(this).data('id');
         $(this).addClass('active');
         var dictrictId = $(this).data('dictrict');
+        var district = $('a.polygonItems-dictrict.active').html();
+        showModelDetail( district);
         getShapes(code);
         ward(dictrictId);
     });
@@ -92,6 +88,8 @@ function register() {
         e.preventDefault();
         $(this).addClass('active');
         var code = $(this).data('id');
+        var ward = $('a.polygonItems-ward.active').html();
+        showModelDetail("", "", ward);
         getShapes(code);
     });
     $("#menu-close").on('click',function (e) {
@@ -191,4 +189,25 @@ function getShapes(code) {
             drawPolygon(shapes, pointCenter);
         }
     });
+}
+
+function showModelDetail(city, district, ward) {
+    var html = '';
+    if (city !== undefined || city==='') {
+        html += "<td>Thành phố/Tỉnh</td><td>" + city + "</td>";
+
+        $('#city').html('');
+        $('#city').append(html);
+        
+    }
+    if (dictrict !== undefined || dictrict==='') {
+        html = "<td>Quận/Huyện</td><td>" + district + "</td>";
+        $('#district').html('');
+        $('#district').append(html);
+    }
+    if (ward !== undefined || ward==='') {
+        html = "<td>Xã/Phường</td><td>" + ward + "</td>";
+        $('#ward').html('');
+        $('#ward').append(html);
+    }
 }

@@ -127,9 +127,7 @@ ul#wards li {
 }
 
 /* ----- v CAN BE DELETED v ----- */
-body {
-    background-color: #78909C;
-}
+
 
 .demo {
     padding-top: 60px;
@@ -163,3 +161,6 @@ body {
         font-size: 16px;
         color: #fff;
     }
+.modal-backdrop {
+    opacity: 0 !important;
+}
