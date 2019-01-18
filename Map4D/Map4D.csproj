@@ -203,7 +203,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Login\" />
     <Folder Include="Views\TestGet\" />
   </ItemGroup>
   <ItemGroup>

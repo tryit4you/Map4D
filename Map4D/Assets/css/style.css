@@ -5,44 +5,48 @@
  *
  * Made By MaterializeCSS.com
  */
-.login-layout{
-    width:100%;
-    position:relative;
-}
-.login-form {
-    margin: auto;
-    text-align: center;
-}
-.login-block {
-    position: absolute;
-    margin-top: 6%;
-    left: 37%;
-    max-width: 400px;
-}
-.input-field .helper-text {
-    color: rgba(249, 0, 0, 0.8) !important;
-    text-align: left;
-    font-style: italic;
-}
-.page-loader {
-    position: absolute;
-    top: 23%;
-    left: 44%;
-    display: inline-flex;
-    flex-direction:column;
-}
-    .page-loader img {
-        width: 100px;
-        height: 100px;
+
+
+    ul#cities li > a {
+        padding: 2px 8px;
+   
     }
-.loader {
-    width: 100%;
-    position: absolute;
-    height: 100%;
-    z-index: 10000;
-    background-color: rgba(109, 109, 109, 0.18);
+
+ul#cities li {
+    border: 1px solid #f1f1f1;
+    border-bottom: none;
+}
+
+
+    ul#dictricts li > a {
+        padding: 2px 8px;
+     
+    }
+li.ul-list:last-child {
+    border: 1px solid #f1f1f1 !important;
+
+}
+.col.s2 {
+    margin-left: -15px !important;
+}
+ul#dictricts li {
+    border: 1px solid #f1f1f1;
+    border-bottom: none;
+}
+
+ul#wards li > a {
+    padding: 2px 8px;
+ 
+}
+
+ul#wards li {
+    border: 1px solid #f1f1f1;
+    border-bottom: none;
 }
 .content{
     min-height:500px;
     
+}
+.active{
+    color:red;
 }

@@ -76,7 +76,7 @@ namespace Map4D.Data.DAO
                  / (listPoint[j].Lat - listPoint[i].Lat) + listPoint[i].Lng))
                 {
                     result = !result;
-                    break;
+                
                 }
             }
             return result;
