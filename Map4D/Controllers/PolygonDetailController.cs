@@ -23,6 +23,13 @@ namespace Map4D.Controllers
                 details
             },JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult GetDetailObject(string code)
+        {
+            string html = polygonDetail.GetPopupHtmlByCode(code);
+            return Json(new
+            {
+                htmlCode = html
+            },JsonRequestBehavior.AllowGet);
+        }
     }
 }

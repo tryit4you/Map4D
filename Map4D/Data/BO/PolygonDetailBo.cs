@@ -19,5 +19,9 @@ namespace Map4D.Data.BO
         {
             return polygonDetailDao.GetInfoPointByLatLng(Lat, Lng);
         }
+        public string GetPopupHtmlByCode(string Code)
+        {
+            return polygonDetailDao.GetPopupHtmlByCode(Code);
+        }
     }
 }
