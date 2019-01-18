@@ -50,3 +50,6 @@ ul#wards li {
 .active{
     color:red;
 }
+.logo {
+    display: none !important;
+}
