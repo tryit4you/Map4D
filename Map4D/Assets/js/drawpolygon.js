@@ -39,7 +39,6 @@ function getPolygonDetail(lat, lng) {
         success: function (res) {
             console.log(res.message);
             var message = res.details.City + "-" + res.details.Dictrict + "-" + res.details.Ward;
-            
             loadCenter(lat, lng, message);
         }
     });
