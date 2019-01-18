@@ -1,37 +1,66 @@
 ﻿$(function () {
     register();
     cities();
+    var paramMapDefault = {
+        lat: 10.167615,
+        lng: 106.411514,
+        zoom: 11,
+        mode: "2d"
+    };
+    paramMap = {
+        mode: paramMapDefault.mode,
+        center: { lat: paramMapDefault.lat, lon: paramMapDefault.lng },
+        tilt: 60,
+        rotation: 0,
+        zoom: paramMapDefault.zoom,
+        plugins: [
+            //MapGL.SearchComponent
+        ]
+    };
+    map = MapGL.initMap("xinkciti-map", paramMap);
+
 });
+function drawPolygon(shapes) {
+    var jsonObj = JSON.parse(shapes);
+    var draw = new L.GeoJSON(jsonObj);
+    map.leaflet.addLayer(draw);
+}
 function register() {
-    $('#metismenu').metisMenu({
-        toggle: false
+  
+
+    $('a.polygonItems').on('click', function () {
+        $(this).addClass('active');
     });
+
     $('.polygonItems').off('click').on('click', function (e) {
+        $('.polygonItems').removeClass('active');
         //e.preventDefault();
         var code = $(this).data('id');
         var cityId = $(this).data('city');
-        dictrict(cityId, code);
+        $(this).addClass('active');
+        $('#wards').html('');
+        getShapes(code);
+        dictrict(cityId);
     });
     $('.polygonItems-dictrict').off('click').on('click', function (e) {
+        $('.polygonItems-dictrict').removeClass('active');
         e.preventDefault();
         var code = $(this).data('id');
+        $(this).addClass('active');
         var dictrictId = $(this).data('dictrict');
-        ward(dictrictId, code);
+        getShapes(code);
+        ward(dictrictId);
     });
     $('.polygonItems-ward').off('click').on('click', function (e) {
+        $('.polygonItems-ward').removeClass('active');
         e.preventDefault();
+        $(this).addClass('active');
         var code = $(this).data('id');
-        getward(code);
+        getShapes(code);
     });
     
 }
-//function initialize() {
-//    map = new google.maps.Map(document.getElementById('map'), {
-//        center: { "lat": 16.0801596580643, "lng": 108.218930205985 },
-//        zoom: 20,
-//        mapTypeId: 'roadmap'
-//    });
-//}
+
 
 function cities() {
     $.ajax({
@@ -54,19 +83,17 @@ function cities() {
         }
     });
 }
-function dictrict(cityId,code) {
+function dictrict(cityId) {
     $.ajax({
         url: '/drawpolygon/listdictrict',
         data: {
-            cityId: cityId,
-            code:code
+            cityId: cityId
         },
         type: 'post',
         dataType: 'json',
         success: function (res) {
             var html = '';
             var data = res.data;
-            var shapes = res.shapes;
             var template = $('#dictrict-template').html();
             $.each(data, function (i, item) {
                 html += Mustache.render(template, {
@@ -76,16 +103,17 @@ function dictrict(cityId,code) {
                 });
             });
             $('#dictricts').html(html);
+
+      
             register();
         }
     });
 }
-function ward(dictrictId,code) {
+function ward(dictrictId) {
     $.ajax({
         url: '/drawpolygon/ListWard',
         data: {
-            dictrictId: dictrictId,
-            code: code
+            dictrictId: dictrictId
         },
         type: 'post',
         dataType: 'json',
@@ -101,13 +129,15 @@ function ward(dictrictId,code) {
                 });
             });
             $('#wards').html(html);
+            
             register();
         }
     });
 }
-function getward(code) {
+
+function getShapes(code) {
     $.ajax({
-        url: '/drawpolygon/getward',
+        url: '/drawpolygon/GetShapes',
         data: {
             code: code
         },
@@ -115,28 +145,7 @@ function getward(code) {
         dataType: 'json',
         success: function (res) {
             var shapes = res.shapes;
-            register();
+            drawPolygon(shapes);
         }
     });
 }
-//function DrawShape(code) {
-//    $.ajax({
-//        url: '/drawpolygon/GetShapeWard',
-//        data: { code: code },
-//        type: 'post',
-//        dataType: 'json',
-//        success: function (res) {
-//            var data = res.data.Table;
-//            console.log(res.data);
-//            var bermudaTriangle = new google.maps.Polygon({
-//                paths: data,
-//                strokeColor: '#FF0000',
-//                strokeOpacity: 0.8,
-//                strokeWeight: 2,
-//                fillColor: '#FF0000',
-//                fillOpacity: 0.35
-//            });
-//            bermudaTriangle.setMap(map);
-//        }
-//    });
-//}

@@ -13,8 +13,8 @@
     <div class="col s2 ">
         <ul id="wards"></ul>
     </div>
-    <div class="col-6">
-        <h4>Vị trí hiển thị bản đồ</h4>
+    <div class="col s6">
+        <div id="xinkciti-map" style="height: 83%; width: 50%;margin-top:1%; position: absolute;"></div>
     </div>
 
 </div>
@@ -22,17 +22,17 @@
 
 
 <script id="city-template" type="x-tmpl-mustache">
-    <li class="mm-active">
+    <li class="ul-list">
         <a href="#" aria-expanded="true" class="polygonItems" data-city="{{cityId}}" data-id="{{code}}">{{name}}</a>
     </li>
 </script>
 <script id="dictrict-template" type="x-tmpl-mustache">
-    <li class="mm-active">
+    <li class="ul-list">
         <a href="#" aria-expanded="true" class="polygonItems-dictrict" data-dictrict="{{dictrictId}}" data-id="{{code}}">{{name}}</a>
     </li>
 </script>
 <script id="ward-template" type="x-tmpl-mustache">
-    <li class="mm-active">
+    <li class="ul-list">
         <a href="#" aria-expanded="true" class="polygonItems-ward" data-ward="{{wardId}}"  data-id="{{code}}">{{name}}</a>
     </li>
 </script>
