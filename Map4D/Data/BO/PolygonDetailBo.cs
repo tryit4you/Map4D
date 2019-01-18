@@ -11,17 +11,13 @@ namespace Map4D.Data.BO
     public class PolygonDetailBo
     {
         private PolygonDetailDao polygonDetailDao = new PolygonDetailDao();
-        public List<PolygonDetailViewModel> GetDetailByLatLng(string lat, string lng)
+        public InfoPointViewModel GetInfoPointByWardCode(string wardCode)
         {
-            return polygonDetailDao.GetDetailByLatLng(lat, lng);
+            return polygonDetailDao.GetInfoPointByWardCode(wardCode);
         }
-        public bool KiemTraTonTai(PolygonDetailViewModel polygon, PointViewModel pointKiemTra)
+        public InfoPointViewModel GetInfoPointByLatLng(string Lat, string Lng)
         {
-            return polygonDetailDao.KiemTraTonTai(polygon, pointKiemTra);
-        }
-        public bool KiemTraTonTai2(PolygonDetailViewModel polygon, PointViewModel pointKiemTra)
-        {
-            return polygonDetailDao.KiemTraTonTai2(polygon, pointKiemTra);
+            return polygonDetailDao.GetInfoPointByLatLng(Lat, Lng);
         }
     }
 }
