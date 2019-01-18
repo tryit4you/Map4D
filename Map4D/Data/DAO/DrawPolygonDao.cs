@@ -1,5 +1,6 @@
 ﻿using CommonLogger.Libraries;
 using Map4D.Models;
+using Map4D.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -119,6 +120,20 @@ namespace Map4D.Data.DAO
             }
             reader.Close();
             return DuLieuDoiTuong;
+        }
+        public PointViewModel GetPointCenterByCode(string Code)
+        {
+            PointViewModel pointCenter = null;
+            string sqlQuery = "EXEC GetPointCenterByCode @Code = '" + Code + "'";
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            if (reader.Read())
+            {
+                double Lat = double.Parse(reader["Lat"].ToString());
+                double Lng = double.Parse(reader["Lng"].ToString());
+                pointCenter = new PointViewModel() { Lat = Lat, Lng = Lng };
+            }
+            reader.Close();
+            return pointCenter;
         }
         private List<string> GetListIdByCode(string code)
         {

@@ -91,5 +91,14 @@ namespace Map4D.Controllers
                 shapes
             },JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetShapes(string code)
+        {
+            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
+
+            return Json(new
+            {
+                shapes
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
