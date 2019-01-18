@@ -44,7 +44,7 @@ function getPolygonDetail(lat, lng) {
         dataType: 'json',
         success: function (res) {
             console.log(res.message);
-            var message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;' src='/Assets/uploads/no-street-view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
+            var message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;' src='https://map.map4d.vn/data/no-street-view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
             loadCenter(lat, lng, message);
         }
     });
@@ -59,16 +59,16 @@ function drawPolygon(shapes, pointCenter) {
 
 }
 function register() {
-  
+    $('#modalDetail').modal({ backdrop: 'static', keyboard: false });
     $('.polygonItems').off('click').on('click', function (e) {
         $('.polygonItems').removeClass('active');
         //e.preventDefault();
         var code = $(this).data('id');
         var cityId = $(this).data('city');
         $(this).addClass('active');
-        var city = $('a.polygonItems.active').html();
-        showModelDetail(city);
+        getDetail(code);
         $('#modalDetail').modal('show');
+     
         getShapes(code);
         dictrict(cityId);
     });
@@ -78,8 +78,7 @@ function register() {
         var code = $(this).data('id');
         $(this).addClass('active');
         var dictrictId = $(this).data('dictrict');
-        var district = $('a.polygonItems-dictrict.active').html();
-        showModelDetail( district);
+        getDetail(code);
         getShapes(code);
         ward(dictrictId);
     });
@@ -88,8 +87,7 @@ function register() {
         e.preventDefault();
         $(this).addClass('active');
         var code = $(this).data('id');
-        var ward = $('a.polygonItems-ward.active').html();
-        showModelDetail("", "", ward);
+        getDetail(code);
         getShapes(code);
     });
     $("#menu-close").on('click',function (e) {
@@ -191,23 +189,16 @@ function getShapes(code) {
     });
 }
 
-function showModelDetail(city, district, ward) {
-    var html = '';
-    if (city !== undefined || city==='') {
-        html += "<td>Thành phố/Tỉnh</td><td>" + city + "</td>";
-
-        $('#city').html('');
-        $('#city').append(html);
-        
-    }
-    if (dictrict !== undefined || dictrict==='') {
-        html = "<td>Quận/Huyện</td><td>" + district + "</td>";
-        $('#district').html('');
-        $('#district').append(html);
-    }
-    if (ward !== undefined || ward==='') {
-        html = "<td>Xã/Phường</td><td>" + ward + "</td>";
-        $('#ward').html('');
-        $('#ward').append(html);
-    }
+function getDetail(code) {
+    $.ajax({
+        url: '/polygondetail/GetDetailObject',
+        type: 'post',
+        data: { code: code },
+        dataType: 'json',
+        success: function (res) {
+            $('#details').html('');
+            var html = res.htmlCode;
+            $('#details').html(html);
+        }
+    });
 }
