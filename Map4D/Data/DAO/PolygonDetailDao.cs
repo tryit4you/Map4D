@@ -20,7 +20,28 @@ namespace Map4D.Data.DAO
             string connection = AdoHelper.ConnectionString;
             helper = new AdoHelper(connection);
         }
-        public List<PolygonDetailViewModel> GetDetailByLatLng(string lat, string lng)
+        public InfoPointViewModel GetInfoPointByLatLng(string Lat, string Lng)
+        {
+            List<PolygonDetailViewModel> listDetail = GetDetailByLatLng(Lat, Lng);
+            PointViewModel pointCheck = new PointViewModel() { Lng = double.Parse(Lng), Lat = double.Parse(Lat) };
+            foreach (PolygonDetailViewModel polygon in listDetail)
+            {
+                bool result = CheckExitst(polygon, pointCheck);
+                if (result)
+                {
+                    return GetInfoPointByWardCode(polygon.Value);
+                }
+            }
+            return null;
+        }
+        public InfoPointViewModel GetInfoPointByWardCode(string wardCode)
+        {
+            string Ward = GetWardByCode(wardCode);
+            string District = GetDistrictByWardCode(wardCode);
+            string City = GetCityByWardCode(wardCode);
+            return new InfoPointViewModel() { City = City, District = District, Ward = Ward };
+        }
+        private List<PolygonDetailViewModel> GetDetailByLatLng(string lat, string lng)
         {
             List<PolygonDetailViewModel> polygonDetails = new List<PolygonDetailViewModel>();
             string query = $"EXEC XacDinhToaDo @lat='{lat}' ,@lng='{lng}'";
@@ -38,20 +59,54 @@ namespace Map4D.Data.DAO
             reader.Close();
             return polygonDetails;
         }
-        public bool KiemTraTonTai(PolygonDetailViewModel polygon,PointViewModel pointKiemTra)
+        private string GetCityByWardCode(string wardCode)
         {
-            string detail = ConvertStringJson(polygon.DuLieuDoiTuong);
-            List<PointViewModel> listPoint = ConvertStringToListPoint(detail);
-            bool result = KiemTraWithListPoint(listPoint, pointKiemTra);
+            string City = string.Empty;
+            string CityCode = wardCode.Substring(0, wardCode.Length - 6);
+            string sqlQuery = "SELECT Name FROM Countries WHERE Code = '" + CityCode + "'";
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            if (reader.Read())
+            {
+                City = reader["Name"].ToString();
+            }
+            reader.Close();
+            return City;
+        }
+        private string GetDistrictByWardCode(string wardCode)
+        {
+            string District = string.Empty;
+            string DistrictCode = wardCode.Substring(0, wardCode.Length - 3);
+            string sqlQuery = "SELECT Name FROM Countries WHERE Code = '" + DistrictCode + "'";
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            if (reader.Read())
+            {
+                District = reader["Name"].ToString();
+            }
+            reader.Close();
+            return District;
+        }
+        private string GetWardByCode(string Code)
+        {
+            string Ward = string.Empty;
+            string sqlQuery = "SELECT Name FROM Countries WHERE Code = '" + Code + "'";
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            if (reader.Read())
+            {
+                Ward = reader["Name"].ToString();
+            }
+            reader.Close();
+            return Ward;
+        }
+        private bool CheckExitst(PolygonDetailViewModel polygon,PointViewModel pointCheck)
+        {
+            List<PointViewModel> listPoint = ConvertDetailToListPoint(polygon.DuLieuDoiTuong);
+            bool result = CheckWithListPoint(listPoint, pointCheck);
             return result;
         }
-        private string ConvertStringJson(string detail)
-        {
-            return detail.Substring(detail.IndexOf("[[") + 3, detail.LastIndexOf("]]") - detail.IndexOf("[[") - 4);
-        }
-        private List<PointViewModel> ConvertStringToListPoint(string detail)
+        private List<PointViewModel> ConvertDetailToListPoint(string detail)
         {
             List<PointViewModel> listPoint = new List<PointViewModel>();
+            detail = detail.Substring(detail.IndexOf("[[") + 3, detail.LastIndexOf("]]") - detail.IndexOf("[[") - 4);
             string[] listSplit = detail.Split('[', ']');
             foreach (string split in listSplit)
             {
@@ -64,48 +119,21 @@ namespace Map4D.Data.DAO
             }
             return listPoint;
         }
-        private bool KiemTraWithListPoint(List<PointViewModel> listPoint, PointViewModel pointKiemTra)
+        private bool CheckWithListPoint(List<PointViewModel> listPoint, PointViewModel pointCheck)
         {
             int i, j;
             bool result = false;
             int countListPoint = listPoint.Count;
             for (i = 0, j = countListPoint - 1; i < countListPoint; j = i++)
             {
-                if (((listPoint[i].Lat > pointKiemTra.Lat) != (listPoint[j].Lat > pointKiemTra.Lat)) &&
-                 (pointKiemTra.Lng < (listPoint[j].Lng - listPoint[i].Lng) * (pointKiemTra.Lat - listPoint[i].Lat)
+                if (((listPoint[i].Lat > pointCheck.Lat) != (listPoint[j].Lat > pointCheck.Lat)) &&
+                 (pointCheck.Lng < (listPoint[j].Lng - listPoint[i].Lng) * (pointCheck.Lat - listPoint[i].Lat)
                  / (listPoint[j].Lat - listPoint[i].Lat) + listPoint[i].Lng))
                 {
                     result = !result;
-                    break;
                 }
             }
             return result;
         }
-        public bool IsInPolygon(List<PointViewModel> listPoint, PointViewModel pointKiemTra)
-        {
-            var coef = listPoint.Skip(1).Select((p, i) =>
-                                            (pointKiemTra.Lat - listPoint[i].Lat) * (p.Lng - listPoint[i].Lng)
-                                          - (pointKiemTra.Lng - listPoint[i].Lng) * (p.Lat - listPoint[i].Lat))
-                                    .ToList();
-
-            if (coef.Any(p => p == 0))
-                return true;
-
-            for (int i = 1; i < coef.Count(); i++)
-            {
-                if (coef[i] * coef[i - 1] < 0)
-                    return false;
-            }
-            return true;
-        }
-
-        public bool KiemTraTonTai2(PolygonDetailViewModel polygon, PointViewModel pointKiemTra)
-        {
-            string detail = ConvertStringJson(polygon.DuLieuDoiTuong);
-            List<PointViewModel> listPoint = ConvertStringToListPoint(detail);
-            bool result = IsInPolygon(listPoint, pointKiemTra);
-            return result;
-        }
-
     }
 }

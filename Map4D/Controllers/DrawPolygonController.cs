@@ -49,7 +49,6 @@ namespace Map4D.Controllers
         }
         public ActionResult GetShapesByCode(string code)
         {
-
             var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
             return Json(new
             {
@@ -86,7 +85,8 @@ namespace Map4D.Controllers
                 shapes=shapes,
                 data = listWard
             },JsonRequestBehavior.AllowGet);
-        } public JsonResult getward(string code)
+        }
+        public JsonResult getWard(string code)
         {
             
             var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
@@ -95,6 +95,5 @@ namespace Map4D.Controllers
                 shapes=shapes,
             },JsonRequestBehavior.AllowGet);
         }
-        
     }
 }
