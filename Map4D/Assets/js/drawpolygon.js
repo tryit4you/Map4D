@@ -49,7 +49,16 @@ function drawPolygon(shapes) {
     });
 }
 
+function drawPolygon(shapes) {
+    var jsonObj = JSON.parse(shapes);
+    var draw = new L.GeoJSON(jsonObj);
+    map.leaflet.addLayer(draw);
+}
 function register() {
+  
+
+    $('a.polygonItems').on('click', function () {
+        $(this).addClass('active');
    
 
     $('a.polygonItems').on('click', function () {
@@ -84,6 +93,13 @@ function register() {
     });
     
 }
+//function initialize() {
+//    map = new google.maps.Map(document.getElementById('map'), {
+//        center: { "lat": 16.0801596580643, "lng": 108.218930205985 },
+//        zoom: 20,
+//        mapTypeId: 'roadmap'
+//    });
+//}
 
 function cities() {
     $.ajax({
@@ -106,7 +122,6 @@ function cities() {
         }
     });
 }
-
 function dictrict(cityId) {
     $.ajax({
         url: '/drawpolygon/listdictrict',
@@ -133,7 +148,6 @@ function dictrict(cityId) {
         }
     });
 }
-
 function ward(dictrictId) {
     $.ajax({
         url: '/drawpolygon/ListWard',
