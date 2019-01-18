@@ -44,7 +44,7 @@ function getPolygonDetail(lat, lng) {
         dataType: 'json',
         success: function (res) {
             console.log(res.message);
-            var message = res.details.Ward + "-" + res.details.District + "-" + res.details.City;
+            var message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;' src='/Assets/uploads/no-street-view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
             loadCenter(lat, lng, message);
         }
     });
