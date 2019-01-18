@@ -2,6 +2,7 @@
 using Map4D.Models;
 using Map4D.ViewModels;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,45 +57,41 @@ namespace Map4D.Controllers
                 data=shapes
             },JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ListCity(string code)
+        public JsonResult ListCity()
         {
             var listCity = drawPolygonBo.GetAllCity();
-            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
             return Json(new
             {
-                shapes=shapes,
                 data = listCity
             },JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ListDictrict(string cityId,string code)
+        public JsonResult ListDictrict(string cityId)
         {
             var listDistrict = drawPolygonBo.GetAllDistrictByCity(int.Parse(cityId));
-            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
             return Json(new
             {
-                shapes=shapes,
                 data = listDistrict
             },JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ListWard(string dictrictId, string code)
+        public JsonResult ListWard(string dictrictId)
         {
             
             var listWard = drawPolygonBo.GetAllWardByDistrict(int.Parse(dictrictId));
-            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
+          
             return Json(new
             {
-                shapes=shapes,
                 data = listWard
             },JsonRequestBehavior.AllowGet);
-        } public JsonResult getward(string code)
+        }
+  
+        public JsonResult GetShapes(string code)
         {
-            
             var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
+            
             return Json(new
             {
-                shapes=shapes,
+                shapes
             },JsonRequestBehavior.AllowGet);
         }
-        
     }
 }
