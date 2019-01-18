@@ -5,7 +5,7 @@ $(function () {
     loadCenter(16.036918, 108.218510);
 
 });
-function loadCenter(lat,lng,message) {
+function loadCenter(lat, lng, message) {
     var paramMapDefault = {
         lat: lat,
         lng: lng,
@@ -55,46 +55,54 @@ function drawPolygon(shapes, pointCenter) {
     var jsonObj = JSON.parse(shapes);
     var draw = new L.GeoJSON(jsonObj);
     map.leaflet.addLayer(draw);
-    
-    
+
+
 }
 function register() {
 
+    $('.modal').modal();
     $('a.polygonItems').on('click', function () {
         $(this).addClass('active');
     });
-        $('a.polygonItems').on('click', function () {
-            $(this).addClass('active');
-        });
+    $('a.polygonItems').on('click', function () {
+        $(this).addClass('active');
+    });
 
-        $('.polygonItems').off('click').on('click', function (e) {
-            $('.polygonItems').removeClass('active');
-            //e.preventDefault();
-            var code = $(this).data('id');
-            var cityId = $(this).data('city');
-            $(this).addClass('active');
-            $('#wards').html('');
-            getShapes(code);
-            dictrict(cityId);
-        });
-        $('.polygonItems-dictrict').off('click').on('click', function (e) {
-            $('.polygonItems-dictrict').removeClass('active');
-            e.preventDefault();
-            var code = $(this).data('id');
-            $(this).addClass('active');
-            var dictrictId = $(this).data('dictrict');
-            getShapes(code);
-            ward(dictrictId);
-        });
-        $('.polygonItems-ward').off('click').on('click', function (e) {
-            $('.polygonItems-ward').removeClass('active');
-            e.preventDefault();
-            $(this).addClass('active');
-            var code = $(this).data('id');
-            getShapes(code);
-        });
-
-    }
+    $('.polygonItems').off('click').on('click', function (e) {
+        $('.polygonItems').removeClass('active');
+        //e.preventDefault();
+        var code = $(this).data('id');
+        var cityId = $(this).data('city');
+        $(this).addClass('active');
+        $('#wards').html('');
+        getShapes(code);
+        dictrict(cityId);
+    });
+    $('.polygonItems-dictrict').off('click').on('click', function (e) {
+        $('.polygonItems-dictrict').removeClass('active');
+        e.preventDefault();
+        var code = $(this).data('id');
+        $(this).addClass('active');
+        var dictrictId = $(this).data('dictrict');
+        getShapes(code);
+        ward(dictrictId);
+    });
+    $('.polygonItems-ward').off('click').on('click', function (e) {
+        $('.polygonItems-ward').removeClass('active');
+        e.preventDefault();
+        $(this).addClass('active');
+        var code = $(this).data('id');
+        getShapes(code);
+    });
+    $("#menu-close").on('click',function (e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    $("#menu-toggle").on('click',function (e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+}
 
 function cities() {
     $.ajax({
@@ -107,9 +115,9 @@ function cities() {
             var template = $('#city-template').html();
             $.each(data, function (i, item) {
                 html += Mustache.render(template, {
-                    cityId:item.Id,
+                    cityId: item.Id,
                     code: item.Code,
-                    name:item.Name
+                    name: item.Name
                 });
             });
             $('#cities').html(html);
@@ -131,14 +139,14 @@ function dictrict(cityId) {
             var template = $('#dictrict-template').html();
             $.each(data, function (i, item) {
                 html += Mustache.render(template, {
-                    dictrictId:item.Id,
+                    dictrictId: item.Id,
                     code: item.Code,
                     name: item.Name
                 });
             });
             $('#dictricts').html(html);
 
-      
+
             register();
         }
     });
@@ -157,13 +165,13 @@ function ward(dictrictId) {
             var template = $('#ward-template').html();
             $.each(data, function (i, item) {
                 html += Mustache.render(template, {
-                    wardId:item.Id,
+                    wardId: item.Id,
                     code: item.Code,
                     name: item.Name
                 });
             });
             $('#wards').html(html);
-            
+
             register();
         }
     });
