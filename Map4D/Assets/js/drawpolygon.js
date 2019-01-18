@@ -18,8 +18,37 @@
         ]
     };
     map = MapGL.initMap("xinkciti-map", paramMap);
+    map.leaflet.on('click', function (e) {
+        getPolygonDetail(e.latlng.lat, e.latlng.lng);
+        console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+    });
 
 });
+function getPolygonDetail(lat, lng) {
+    $.ajax({
+        url: '/polygondetail/GetDetailByLatLng',
+        data: {
+            lat: lat,
+            lng: lng
+        },
+        type: 'post',
+        dataType: 'json',
+        success: function (res) {
+            console.log(res.message);
+        }
+    });
+}
+
+function drawPolygon(shapes) {
+    var jsonObj = JSON.parse(shapes);
+    var draw = new L.GeoJSON(jsonObj);
+    map.leaflet.addLayer(draw);
+    L.map('xinkciti-map', {
+        center: [draw, draw.lat],
+        zoom: 13
+    });
+}
+
 function drawPolygon(shapes) {
     var jsonObj = JSON.parse(shapes);
     var draw = new L.GeoJSON(jsonObj);
@@ -27,6 +56,10 @@ function drawPolygon(shapes) {
 }
 function register() {
   
+
+    $('a.polygonItems').on('click', function () {
+        $(this).addClass('active');
+   
 
     $('a.polygonItems').on('click', function () {
         $(this).addClass('active');
@@ -60,7 +93,13 @@ function register() {
     });
     
 }
-
+//function initialize() {
+//    map = new google.maps.Map(document.getElementById('map'), {
+//        center: { "lat": 16.0801596580643, "lng": 108.218930205985 },
+//        zoom: 20,
+//        mapTypeId: 'roadmap'
+//    });
+//}
 
 function cities() {
     $.ajax({

@@ -15,5 +15,10 @@ namespace Map4D.Controllers
         {
             return View();
         }
+
+        public JsonResult GetDetailByLatLng(string lat, string lng)
+        {
+            return Json(polygonDetail.GetDetailByLatLng(lat, lng), JsonRequestBehavior.AllowGet);
+        }
     }
 }
