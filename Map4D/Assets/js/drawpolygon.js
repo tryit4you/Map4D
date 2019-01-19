@@ -65,7 +65,7 @@ function drawPolygon(shapes, pointCenter) {
 
 }
 function register() {
-    $('#modalDetail').modal({ backdrop: 'static', keyboard: false });
+    //$('#modalDetail').modal({ backdrop: 'static', keyboard: false });
     $('.polygonItems').off('click').on('click', function (e) {
         $('.polygonItems').removeClass('active');
         //e.preventDefault();
@@ -73,7 +73,8 @@ function register() {
         var cityId = $(this).data('city');
         $(this).addClass('active');
         getDetail(code);
-        $('#modalDetail').modal('show');
+        //$('#modalDetail').modal('show');
+        $("#popup").show();
      
         getShapes(code);
         dictrict(cityId);
@@ -87,6 +88,7 @@ function register() {
         getDetail(code);
         getShapes(code);
         ward(dictrictId);
+        $("#popup").show();
     });
     $('.polygonItems-ward').off('click').on('click', function (e) {
         $('.polygonItems-ward').removeClass('active');
@@ -95,6 +97,7 @@ function register() {
         var code = $(this).data('id');
         getDetail(code);
         getShapes(code);
+        $("#popup").show();
     });
     $("#menu-close").on('click',function (e) {
         e.preventDefault();
@@ -202,9 +205,9 @@ function getDetail(code) {
         data: { code: code },
         dataType: 'json',
         success: function (res) {
-            $('#details').html('');
+            $('#popup').html('');
             var html = res.htmlCode;
-            $('#details').html(html);
+            $('#popup').html(html);
         }
     });
 }
