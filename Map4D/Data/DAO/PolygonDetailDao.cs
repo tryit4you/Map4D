@@ -138,13 +138,13 @@ namespace Map4D.Data.DAO
         public string GetPopupHtmlByCode(string Code)
         {
             string html = "<tr><td>Quốc gia</td><td>Việt Nam</td></tr>";
-            if(Code.Length == 12)
+            if (Code.Length == 12)
             {
                 InfoPointViewModel infoPoint = GetInfoPointByWardCode(Code);
                 html += $"<tr><td>Tỉnh/Thành phố</td><td>{infoPoint.City}</td></tr><tr><td>Quận/Huyện</td><td>{infoPoint.District}</td></tr><tr><td>Xã/Phường</td><td>{infoPoint.Ward}</td></tr>";
                 return html;
             }
-            if(Code.Length == 9)
+            if (Code.Length == 9)
             {
                 string District = GetDistrictByWardCode(Code + "000");
                 string City = GetCityByWardCode(Code + "000");

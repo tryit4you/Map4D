@@ -20,7 +20,30 @@
 
 </div>
 <br />
+<div class="col-sm-3 col-md-3 col-lg-3">
+    <div class="row">
+       
+    </div>
+    <div class="modal right fade" id="modalDetail" tabindex="-1" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
 
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel2">Thông tin </h4>
+                </div>
+
+                <div class="modal-body">
+                 <h4>Thông tin địa chính</h4>
+                 <table id="details" class="table">
+                     
+                 </table>
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</div>
 <script id="city-template" type="x-tmpl-mustache">
     <li class="list-group-item">
         <a href="#" aria-expanded="true" class="polygonItems" data-city="{{cityId}}" data-id="{{code}}">{{name}}</a>
