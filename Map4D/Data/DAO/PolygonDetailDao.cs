@@ -137,7 +137,7 @@ namespace Map4D.Data.DAO
         }
         public string GetPopupHtmlByCode(string Code)
         {
-            string html = "<tr><td>Quốc gia</td><td>Việt Nam</td></tr>";
+            string html = "<thead><tr><td colspan='2' style='font-weight:bold;'><span class='glyphicon glyphicon-tag'></span> Thông tin sơ lược</td></tr></thead><tbody><tr><td>Quốc gia</td><td>Việt Nam</td></tr>";
             if (Code.Length == 12)
             {
                 InfoPointViewModel infoPoint = GetInfoPointByWardCode(Code);
@@ -157,7 +157,7 @@ namespace Map4D.Data.DAO
                 html += $"<tr><td>Tỉnh/Thành phố</td><td>{City}</td></tr>";
                 return html;
             }
-            return html;
+            return html + "</tbody>";
         }
     }
 }

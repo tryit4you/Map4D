@@ -1,8 +1,6 @@
-﻿$(document).ready(function () {
-    $("#hide-popup").click(function () {
-        $("#popup").hide();
-    });
-});
+﻿function hidePopup() {
+   $("#popup").hide();
+};
 var map;
 $(function () {
     register();
@@ -31,6 +29,7 @@ function loadCenter(lat, lng, message) {
     map = MapGL.initMap("xinkciti-map", paramMap);
     map.leaflet.on('click', function (e) {
         getPolygonDetail(e.latlng.lat, e.latlng.lng);
+        hidePopup();
     });
     if (message !== undefined) {
         L.popup()
