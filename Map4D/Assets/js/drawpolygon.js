@@ -1,8 +1,12 @@
-﻿var map;
+﻿function hidePopup() {
+   $("#popup").hide();
+};
+var map;
 $(function () {
     register();
     cities();
     loadCenter(16.036918, 108.218510);
+    $("#popup").hide();
 
 });
 function loadCenter(lat, lng, message) {
@@ -25,6 +29,7 @@ function loadCenter(lat, lng, message) {
     map = MapGL.initMap("xinkciti-map", paramMap);
     map.leaflet.on('click', function (e) {
         getPolygonDetail(e.latlng.lat, e.latlng.lng);
+        hidePopup();
     });
     if (message !== undefined) {
         L.popup()
@@ -44,7 +49,7 @@ function getPolygonDetail(lat, lng) {
         dataType: 'json',
         success: function (res) {
             console.log(res.message);
-            var message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'>  <img src='/Assets/uploads/city.jpg' style='height: 30px' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
+            var message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;' src='https://map.map4d.vn/data/no-street-view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
             loadCenter(lat, lng, message);
         }
     });
@@ -67,7 +72,8 @@ function register() {
         var cityId = $(this).data('city');
         $(this).addClass('active');
         getDetail(code);
-        $('#modalDetail').modal('show');
+        //$('#modalDetail').modal('show');
+        $("#popup").show();
      
         getShapes(code);
         dictrict(cityId);
@@ -79,18 +85,19 @@ function register() {
         $(this).addClass('active');
         var dictrictId = $(this).data('dictrict');
         getDetail(code);
-        $('#modalDetail').modal('show');
         getShapes(code);
         ward(dictrictId);
+        $("#popup").show();
     });
     $('.polygonItems-ward').off('click').on('click', function (e) {
         $('.polygonItems-ward').removeClass('active');
         e.preventDefault();
         $(this).addClass('active');
         var code = $(this).data('id');
-        getDetail(code);
-        $('#modalDetail').modal('show');
+        var ward = $('a.polygonItems-ward.active').html();
+        showModelDetail("", "", ward);
         getShapes(code);
+        $("#popup").show();
     });
     $("#menu-close").on('click',function (e) {
         e.preventDefault();
@@ -198,9 +205,9 @@ function getDetail(code) {
         data: { code: code },
         dataType: 'json',
         success: function (res) {
-            $('#details').html('');
+            $('#popup').html('');
             var html = res.htmlCode;
-            $('#details').html(html);
+            $('#popup').html(html);
         }
     });
 }
