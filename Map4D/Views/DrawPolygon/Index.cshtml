@@ -7,26 +7,28 @@
     <div class="col-sm-2 col-md-2 col-lg-2">
         <ul class="list-group" id="cities"></ul>
     </div>
-    <div class="col-sm-2 col-md-2 col-lg-2">
+    <div class="col-sm-1 col-md-1 col-lg-1" style="font-size: 95%;">
         <ul class="list-group" id="dictricts"></ul>
     </div>
-    <div class="col-sm-2 col-md-2 col-lg-2">
+    <div class="col-sm-1 col-md-1 col-lg-1" style="font-size: 95%;">
         <ul class="list-group" id="wards"></ul>
     </div>
     <div class="col-sm-6 col-md-6 col-lg-6">
         <div id="xinkciti-map" style="height: 600px; width: 95%; position: absolute;"></div>
     </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <table id="popup" class="table">
+            
+        </table>
+    </div>
 
 </div>
 <br />
 <div class="col-sm-3 col-md-3 col-lg-3">
-    <div class="row">
-       
-    </div>
     <div class="modal right fade" id="modalDetail" tabindex="-1" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-              
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel2">Thông tin </h4>
@@ -44,17 +46,17 @@
     </div><!-- modal -->
 </div>
 <script id="city-template" type="x-tmpl-mustache">
-    <li class="list-group-item">
-        <a href="#" aria-expanded="true" class="polygonItems" data-city="{{cityId}}" data-id="{{code}}">{{name}}</a>
+    <li class="list-group-item" style="padding: 3px 0px;border: none;">
+        <a href="#" aria-expanded="true" class="polygonItems" data-city="{{cityId}}" data-id="{{code}}"><span class="glyphicon glyphicon-chevron-right"></span> {{name}}</a>
     </li>
 </script>
 <script id="dictrict-template" type="x-tmpl-mustache">
-    <li class="list-group-item">
+    <li class="list-group-item" style="padding: 3px 0px;border: none;">
         <a href="#" aria-expanded="true" class="polygonItems-dictrict" data-dictrict="{{dictrictId}}" data-id="{{code}}">{{name}}</a>
     </li>
 </script>
 <script id="ward-template" type="x-tmpl-mustache">
-    <li class="list-group-item">
+    <li class="list-group-item" style="padding: 3px 0px;border: none;">
         <a href="#" aria-expanded="true" class="polygonItems-ward" data-ward="{{wardId}}" data-id="{{code}}">{{name}}</a>
     </li>
 </script>
