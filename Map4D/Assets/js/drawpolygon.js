@@ -1,33 +1,19 @@
-﻿function hidePopup() {
-   $("#popup").hide();
-};
-var map;
+﻿
 $(function () {
-    //register();
+    register();
     cities();
-    tree();
-    //loadCenter(16.036918, 108.218510);
-    //$("#popup").hide();
-    $('.tree li.parent_li > span').each(function () {
-        var children = $(this).parent('li.parent_li').find(' > ul > li');
-        children.hide('fast');
-    });
-
+    //Khởi tạo bản đồ với tham số mặc định
+    InitialMap(16.036918, 108.218510);
+    $("#popup").hide();
 });
-function tree() {
-    $('.tree li:has(ul)').addClass('parent_li').find(' > span');
-    $('.tree li.parent_li > span').on('click', function (e) {
-        var children = $(this).parent('li.parent_li').find(' > ul > li');
-        if (children.is(":visible")) {
-            children.hide('fast');
-        } else {
-            children.show('fast');
-        }
-        e.stopPropagation();
-    });
-    
+
+
+function hidePopup() {
+    $("#popup").hide();
 }
-function loadCenter(lat, lng, message) {
+
+//Hàm khởi tạo bản đồ với tham số lat,lng
+function InitialMap(lat, lng) {
     var paramMapDefault = {
         lat: lat,
         lng: lng,
@@ -45,42 +31,10 @@ function loadCenter(lat, lng, message) {
         ]
     };
     map = MapGL.initMap("xinkciti-map", paramMap);
-    map.leaflet.on('click', function (e) {
-        getPolygonDetail(e.latlng.lat, e.latlng.lng);
-        hidePopup();
-    });
-    if (message !== undefined) {
-        L.popup()
-            .setLatLng([lat, lng])
-            .setContent(message)
-            .openOn(map.leaflet);
-    }
-}
-function getPolygonDetail(lat, lng) {
-    $.ajax({
-        url: '/polygondetail/GetDetailByLatLng',
-        data: {
-            lat: lat,
-            lng: lng
-        },
-        type: 'post',
-        dataType: 'json',
-        success: function (res) {
-            console.log(res.message);
-            var message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;' src='https://map.map4d.vn/data/no-street-view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
-            loadCenter(lat, lng, message);
-        }
-    });
+  
 }
 
-function drawPolygon(shapes, pointCenter) {
-    loadCenter(pointCenter.Lat, pointCenter.Lng);
-    var jsonObj = JSON.parse(shapes);
-    var draw = new L.GeoJSON(jsonObj);
-    map.leaflet.addLayer(draw);
-
-
-}
+//Hàm khởi tạo sự kiện khi click, hoặc thao tác với giao diện
 function register() {
     //$('#modalDetail').modal({ backdrop: 'static', keyboard: false });
     $('.polygonItems').off('click').on('click', function (e) {
@@ -92,9 +46,9 @@ function register() {
         getDetail(code);
         //$('#modalDetail').modal('show');
         $("#popup").show();
-     
+
         getShapes(code);
-        dictrict(cityId);
+        dictricts(cityId);
     });
     $('.polygonItems-dictrict').off('click').on('click', function (e) {
         $('.polygonItems-dictrict').removeClass('active');
@@ -104,7 +58,7 @@ function register() {
         var dictrictId = $(this).data('dictrict');
         getDetail(code);
         getShapes(code);
-        ward(dictrictId);
+        wards(dictrictId);
         $("#popup").show();
     });
     $('.polygonItems-ward').off('click').on('click', function (e) {
@@ -112,38 +66,55 @@ function register() {
         e.preventDefault();
         $(this).addClass('active');
         var code = $(this).data('id');
-        getDetail(code);
+        var ward = $('a.polygonItems-ward.active').html();
+        showModelDetail("", "", ward);
         getShapes(code);
         $("#popup").show();
     });
-    $("#menu-close").on('click',function (e) {
+    $("#menu-close").on('click', function (e) {
         e.preventDefault();
         $("#sidebar-wrapper").toggleClass("active");
     });
-    $("#menu-toggle").on('click',function (e) {
+    $("#menu-toggle").on('click', function (e) {
         e.preventDefault();
         $("#sidebar-wrapper").toggleClass("active");
     });
 }
 
+//Hàm vẽ đường viền của tỉnh thành phố, quận huyện...
+//shapes tham số là dữ liệu để vẽ vào leafletjs
+function drawPolygon(shapes, pointCenter) {
+    InitialMap(pointCenter.Lat, pointCenter.Lng);
+    var jsonObj = JSON.parse(shapes);
+    var draw = new L.GeoJSON(jsonObj);
+    map.leaflet.addLayer(draw);
+}
+
+//Hàm load danh sách thành phố
 function cities() {
     $.ajax({
         url: '/drawpolygon/listcity',
         type: 'post',
         dataType: 'json',
         success: function (res) {
-            var html = "";
+            var html = '';
             var data = res.data;
+            var template = $('#city-template').html();
             $.each(data, function (i, item) {
-                html += "<li><span>" + item.Name + "</span>"+
-                "<ul><li><span>Cẩm lệ</span></li></ul>" +
-                "</li >";
+                html += Mustache.render(template, {
+                    cityId: item.Id,
+                    code: item.Code,
+                    name: item.Name
+                });
             });
-            $('#tree_view').html(html);
+            $('#cities').html(html);
+            register();
         }
     });
 }
-function dictrict(cityId) {
+
+//Hàm load danh sách quận huyện
+function dictricts(cityId) {
     $.ajax({
         url: '/drawpolygon/listdictrict',
         data: {
@@ -164,12 +135,13 @@ function dictrict(cityId) {
             });
             $('#dictricts').html(html);
 
-
             register();
         }
     });
 }
-function ward(dictrictId) {
+
+//Hàm load danh sách xã/phường
+function wards(dictrictId) {
     $.ajax({
         url: '/drawpolygon/ListWard',
         data: {
@@ -195,6 +167,7 @@ function ward(dictrictId) {
     });
 }
 
+//Hàm lấy dữ liệu truyền vào hàm vẽ
 function getShapes(code) {
     $.ajax({
         url: '/drawpolygon/GetShapes',
@@ -211,6 +184,7 @@ function getShapes(code) {
     });
 }
 
+//Hàm lấy thông tin về tỉnh thành phố ,quận huyện đang chọn
 function getDetail(code) {
     $.ajax({
         url: '/polygondetail/GetDetailObject',
