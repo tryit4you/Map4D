@@ -1,10 +1,6 @@
 ﻿using Map4D.Data.DAO;
-using Map4D.Models;
 using Map4D.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Map4D.Data.BO
 {
@@ -38,23 +34,19 @@ namespace Map4D.Data.BO
             return drawPolygonDao.GetAllWardByDistrict(IdDistrict);
         }
         /// <summary>
-        /// Get all ShapeByCode
-        /// </summary>
-        /// <param name="code"></param>
-        /// <returns>List<CountriesViewModel></returns>
-        public List<string> GetAllShapesByCode(string code)
-        {
-            return drawPolygonDao.GetShapeByCode(code);
-        }
-        /// <summary>
-        /// Get dữ liệu đối tượng từ Value thông tin đối tượng phụ
+        /// Get ObjectData by Code
         /// </summary>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public string getDuLieuDoiTuongByCode(string Value)
+        public string GetObjectDataByCode(string Value)
         {
-            return drawPolygonDao.getDuLieuDoiTuongByCode(Value);
+            return drawPolygonDao.GetObjectDataByCode(Value);
         }
+        /// <summary>
+        /// Get PointCenter by Code
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <returns></returns>
         public PointViewModel GetPointCenterByCode(string Code)
         {
             return drawPolygonDao.GetPointCenterByCode(Code);

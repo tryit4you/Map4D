@@ -1,11 +1,7 @@
 ﻿using CommonLogger.Libraries;
-using Map4D.Models;
 using Map4D.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace Map4D.Data.DAO
 {
@@ -28,6 +24,7 @@ namespace Map4D.Data.DAO
         {
             List<CountriesViewModel> listCity = new List<CountriesViewModel>();
             string sqlQuery = "SELECT * FROM Countries WHERE Level = 1 ORDER BY Name";
+
             SqlDataReader reader = helper.ExecDataReader(sqlQuery);
             while (reader.Read())
             {
@@ -47,6 +44,7 @@ namespace Map4D.Data.DAO
                 listCity.Add(City);
             }
             reader.Close();
+
             return listCity;
         }
         /// <summary>
@@ -57,8 +55,10 @@ namespace Map4D.Data.DAO
         public List<CountriesViewModel> GetAllDistrictByCity(int IdCity)
         {
             List<CountriesViewModel> listDistrict = new List<CountriesViewModel>();
-            string sqlQuery = "SELECT * FROM Countries WHERE ParentId = " + IdCity.ToString() + "  ORDER BY Name";
-            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            string sqlQuery = "SELECT * FROM Countries WHERE ParentId = @ParentId ORDER BY Name";
+            object[] _params = new object[] { new SqlParameter("ParentId", IdCity.ToString()) };
+
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery,_params);
             while (reader.Read())
             {
                 CountriesViewModel District = new CountriesViewModel
@@ -77,6 +77,7 @@ namespace Map4D.Data.DAO
                 listDistrict.Add(District);
             }
             reader.Close();
+
             return listDistrict;
         }
         /// <summary>
@@ -87,8 +88,10 @@ namespace Map4D.Data.DAO
         public List<CountriesViewModel> GetAllWardByDistrict(int IdDistrict)
         {
             List<CountriesViewModel> listWard = new List<CountriesViewModel>();
-            string sqlQuery = "SELECT * FROM Countries WHERE ParentId = " + IdDistrict.ToString() + "  ORDER BY Name";
-            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            string sqlQuery = "SELECT * FROM Countries WHERE ParentId = @ParentId ORDER BY Name";
+            object[] _params = new object[] { new SqlParameter("ParentId", IdDistrict.ToString()) };
+
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery,_params);
             while (reader.Read())
             {
                 CountriesViewModel Ward = new CountriesViewModel
@@ -107,25 +110,41 @@ namespace Map4D.Data.DAO
                 listWard.Add(Ward);
             }
             reader.Close();
+
             return listWard;
         }
-        public string getDuLieuDoiTuongByCode(string Code)
+        /// <summary>
+        /// Get ObjectData by Code
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <returns></returns>
+        public string GetObjectDataByCode(string Code)
         {
-            string DuLieuDoiTuong = "[]";
-            string sqlQuery = "EXEC GetDuLieuDoiTuongByCode @Code = '" + Code + "'";
-            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            string objectData = "[]";
+            string sqlQuery = "EXEC GetDuLieuDoiTuongByCode @Code = @_Code";
+            object[] _params = new object[] { new SqlParameter("_Code", Code) };
+
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery,_params);
             if (reader.Read())
             {
-                DuLieuDoiTuong = reader["DuLieuDoiTuong"].ToString();
+                objectData = reader["DuLieuDoiTuong"].ToString();
             }
             reader.Close();
-            return DuLieuDoiTuong;
+
+            return objectData;
         }
+        /// <summary>
+        /// Get PointCenter by Code
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <returns></returns>
         public PointViewModel GetPointCenterByCode(string Code)
         {
             PointViewModel pointCenter = null;
-            string sqlQuery = "EXEC GetPointCenterByCode @Code = '" + Code + "'";
-            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            string sqlQuery = "EXEC GetPointCenterByCode @Code = @_Code";
+            object[] _params = new object[] { new SqlParameter("_Code", Code) };
+
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery,_params);
             if (reader.Read())
             {
                 double Lat = double.Parse(reader["Lat"].ToString());
@@ -133,32 +152,8 @@ namespace Map4D.Data.DAO
                 pointCenter = new PointViewModel() { Lat = Lat, Lng = Lng };
             }
             reader.Close();
-            return pointCenter;
-        }
-        private List<string> GetListIdByCode(string code)
-        {
-            List<string> Ids = new List<string>();
-            string queryListId = $"select Id from  ThongTinDoiTuongChinh WHERE DiaGioiHanhChinhCode={code}";
-            SqlDataReader reader = helper.ExecDataReader(queryListId);
-            while (reader.Read())
-            {
-                Ids.Add(reader["Id"].ToString());
-            }
-            reader.Close();
-            return Ids;
-        }
-        public List<string> GetShapeByCode(string code)
-        {
-            List<string> shapes = new List<string>();
-            var query = $"EXEC GetAllShapJsonByDiaGioiHanhChinhCode '{code}'";
-            SqlDataReader reader = helper.ExecDataReader(query);
-            while (reader.Read())
-            {
-                shapes.Add(reader["ObjectShape"].ToString());
-            }
-            reader.Close();
 
-            return shapes;
+            return pointCenter;
         }
     }
 }
