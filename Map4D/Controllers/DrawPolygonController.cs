@@ -13,7 +13,29 @@ namespace Map4D.Controllers
         {
             return View();
         }
-
+        public ActionResult GetAllData()
+        {
+            var allData = drawPolygonBo.GetAllData();
+            var jsonResult = Json(new
+            {
+                data = allData
+            },JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }
+        public ActionResult GetAllDataPartial()
+        {
+            var listCity = drawPolygonBo.GetAllCity();
+            var listDistrict = drawPolygonBo.GetAllDistrict(2);
+            var listWard = drawPolygonBo.GetAllWard(3);
+            var drawPolygonViewModel = new DrawPolygonViewModels
+            {
+                Cities = listCity,
+                Districts = listDistrict,
+                Wards = listWard
+            };
+            return View(drawPolygonViewModel);
+        }
         public ActionResult GetShapesByCode(string code)
         {
             var shapes = drawPolygonBo.GetDuLieuDoiTuongByCode(code);
@@ -43,6 +65,7 @@ namespace Map4D.Controllers
 
         public JsonResult ListWard(string dictrictId)
         {
+            
             var listWard = drawPolygonBo.GetAllWardByDistrict(int.Parse(dictrictId));
 
             return Json(new
