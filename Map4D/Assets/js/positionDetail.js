@@ -1,6 +1,6 @@
 ﻿
 $(function () {
-     //Khởi tạo bản đồ với tham số mặc định
+    //Khởi tạo bản đồ với tham số mặc định
     InitialMap(16.036918, 108.218510);
 });
 
@@ -45,7 +45,12 @@ function getPolygonDetail(lat, lng) {
         type: 'post',
         dataType: 'json',
         success: function (res) {
-            var message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;' src='https://map.map4d.vn/data/no-street-view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
+            var message = '';
+            if (res.details.Ward === '' || res.details.District === '' || res.details.City === '') {
+                message = '<b>Chưa có địa điểm này trên bản đồ</b>';
+            } else {
+                message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;max-width: none;' src='/Assets/uploads/view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
+            }
             InitialMap(lat, lng, message);
         }
     });
