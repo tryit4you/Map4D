@@ -1,5 +1,4 @@
-﻿using Map4D.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Map4D.ViewModels
 {

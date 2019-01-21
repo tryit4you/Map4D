@@ -1,7 +1,4 @@
 ﻿using Map4D.Data.BO;
-using Map4D.Models;
-using Map4D.ViewModels;
-using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Map4D.Controllers
@@ -10,11 +7,20 @@ namespace Map4D.Controllers
     {
         private PolygonDetailBo polygonDetail = new PolygonDetailBo();
 
-        // GET: PolygonDetail
+        /// <summary>
+        /// GET: PolygonDetail Index
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
+        /// <summary>
+        /// Get InfoPoint by LatLng
+        /// </summary>
+        /// <param name="lat"></param>
+        /// <param name="lng"></param>
+        /// <returns></returns>
         public JsonResult GetDetailByLatLng(string lat, string lng)
         {
             var details = polygonDetail.GetInfoPointByLatLng(lat, lng);
@@ -23,6 +29,11 @@ namespace Map4D.Controllers
                 details
             },JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// Get Html Info Polygon by Code
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public JsonResult GetDetailObject(string code)
         {
             string html = polygonDetail.GetPopupHtmlByCode(code);
