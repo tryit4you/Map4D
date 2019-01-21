@@ -1,6 +1,7 @@
 ﻿using Map4D.Data.BO;
 using Map4D.ViewModels;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace Map4D.Controllers
 {
@@ -13,16 +14,7 @@ namespace Map4D.Controllers
         {
             return View();
         }
-        public ActionResult GetAllData()
-        {
-            var allData = drawPolygonBo.GetAllData();
-            var jsonResult = Json(new
-            {
-                data = allData
-            },JsonRequestBehavior.AllowGet);
-            jsonResult.MaxJsonLength = int.MaxValue;
-            return jsonResult;
-        }
+        [OutputCache(Duration = 17280)]
         public ActionResult GetAllDataPartial()
         {
             var listCity = drawPolygonBo.GetAllCity();
@@ -65,7 +57,7 @@ namespace Map4D.Controllers
 
         public JsonResult ListWard(string dictrictId)
         {
-            
+
             var listWard = drawPolygonBo.GetAllWardByDistrict(int.Parse(dictrictId));
 
             return Json(new

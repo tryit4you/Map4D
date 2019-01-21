@@ -1,8 +1,4 @@
-﻿function hidePopup() {
-    $("#popup").hide();
-}
-
-$(function () {
+﻿$(function () {
     register();
     cities();
     //Khởi tạo bản đồ với tham số mặc định
@@ -57,14 +53,6 @@ function InitialMap(lat, lng) {
   
 }
 
-function drawPolygon(shapes) {
-    var jsonObj = JSON.parse(shapes);
-    var draw = new L.GeoJSON(jsonObj);
-    map.leaflet.addLayer(draw);
-
-
-}
-
 function loadTreeList() {
 
     $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
@@ -95,17 +83,14 @@ function register() {
         $("#popup").show();
 
         getShapes(code);
-        dictrict(cityId);
     });
-    $('.polygonItems-dictrict').off('click').on('click', function (e) {
+    $('.polygonItems-district').off('click').on('click', function (e) {
         $('.polygonItems-dictrict').removeClass('active');
         e.preventDefault();
         var code = $(this).data('id');
         $(this).addClass('active');
-        var dictrictId = $(this).data('dictrict');
         getDetail(code);
         getShapes(code);
-        ward(dictrictId);
         $("#popup").show();
     });
     $('.polygonItems-ward').off('click').on('click', function (e) {
@@ -113,7 +98,6 @@ function register() {
         e.preventDefault();
         $(this).addClass('active');
         var code = $(this).data('id');
-        var ward = $('a.polygonItems-ward.active').html();
       
         getShapes(code);
         $("#popup").show();
