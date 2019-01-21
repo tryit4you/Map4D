@@ -2,6 +2,7 @@
 using Map4D.ViewModels;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace Map4D.Controllers
 {
@@ -15,38 +16,33 @@ namespace Map4D.Controllers
         /// <param name="districtId"></param>
         /// <param name="code"></param>
         /// <returns></returns>
-        public ActionResult Index(string cityId,string districtId,string code)
+     
+        // GET: DrawPolygon
+        public ActionResult Index()
         {
-            string currentCityId=string.Empty;
-            string currentDistrictId=string.Empty;
-
-            IEnumerable<CountriesViewModel> listDistricts=null;
-            IEnumerable<CountriesViewModel> listWards=null;
-            if (cityId!=null)
-            {
-                currentCityId = cityId;
-                listDistricts = drawPolygonBo.GetAllWardByDistrict(int.Parse(cityId));
-            }
-            if (districtId != null)
-            {
-                currentDistrictId = districtId;
-                listWards = drawPolygonBo.GetAllWardByDistrict(int.Parse(districtId));
-            }
-            //if (code!=null)
-            //{
-            //    var shapes = drawPolygonBo.GetObjectDataByCode(code);
-            //}
-
+            return View();
+        }
+        [OutputCache(Duration = 17280)]
+        public ActionResult GetAllDataPartial()
+        {
             var listCity = drawPolygonBo.GetAllCity();
-            var DrawPolygonViewModel = new DrawPolygonViewModels
+            var listDistrict = drawPolygonBo.GetAllDistrict(2);
+            var listWard = drawPolygonBo.GetAllWard(3);
+            var drawPolygonViewModel = new DrawPolygonViewModels
             {
-                CurrentCityId=currentCityId,
-                CurrentDistrictId=currentDistrictId,
                 Cities = listCity,
-                Districts = listDistricts,
-                Wards = listWards,
+                Districts = listDistrict,
+                Wards = listWard
             };
-            return View(DrawPolygonViewModel);
+            return View(drawPolygonViewModel);
+        }
+        public ActionResult GetShapesByCode(string code)
+        {
+            var shapes = drawPolygonBo.GetObjectDataByCode(code);
+            return Json(new
+            {
+                data = shapes
+            }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// Get All City in VietNam
@@ -80,7 +76,6 @@ namespace Map4D.Controllers
         /// <returns></returns>
         public JsonResult ListWard(string dictrictId)
         {
-            
             var listWard = drawPolygonBo.GetAllWardByDistrict(int.Parse(dictrictId));
           
             return Json(new
