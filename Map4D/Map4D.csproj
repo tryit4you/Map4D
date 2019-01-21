@@ -150,11 +150,12 @@
   <ItemGroup>
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\js\drawpolygon.js" />
-    <Content Include="Assets\js\jquery.validate.min.js" />
-    <Content Include="Assets\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Assets\js\mustache.min.js" />
-    <Content Include="Assets\uploads\no-street-view.png" />
+    <Content Include="Assets\js\positionDetail.js" />
+    <Content Include="Assets\uploads\city.jpg" />
+    <Content Include="Assets\uploads\leaf-orange.png" />
     <Content Include="Assets\uploads\page-loader.gif" />
+    <Content Include="Assets\uploads\view.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -165,7 +166,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Assets\uploads\alltrees.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -190,6 +190,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\DrawPolygon\Index.cshtml" />
     <Content Include="Views\PolygonDetail\Index.cshtml" />
+    <Content Include="Views\DrawPolygon\GetAllDataPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

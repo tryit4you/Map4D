@@ -15,6 +15,14 @@ namespace Map4D.Data.BO
         {
             return drawPolygonDao.GetAllCity();
         }
+        public List<CountriesViewModel> GetAllDistrict(int level)
+        {
+            return drawPolygonDao.GetByLevel(level);
+        }
+        public List<CountriesViewModel> GetAllWard(int level)
+        {
+            return drawPolygonDao.GetByLevel(level);
+        }
         /// <summary>
         /// Get all District by City
         /// </summary>
@@ -50,6 +58,10 @@ namespace Map4D.Data.BO
         public PointViewModel GetPointCenterByCode(string Code)
         {
             return drawPolygonDao.GetPointCenterByCode(Code);
+        }
+        public List<CountriesViewModel> GetAllData()
+        {
+            return drawPolygonDao.GetAllData();
         }
     }
 }

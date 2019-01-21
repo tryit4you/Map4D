@@ -1,10 +1,29 @@
-﻿
-$(function () {
+﻿$(function () {
     register();
     cities();
     //Khởi tạo bản đồ với tham số mặc định
     InitialMap(16.036918, 108.218510);
     $("#popup").hide();
+   
+   // loadTreeList();
+
+});
+$(function () {
+
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+        } else {
+            $(this).parent('li.parent_li').children().removeAttr('style');
+            children.show('fast');
+        }
+        
+
+        e.stopPropagation();
+    });
+    $('.level1').find("ul").hide();
 });
 
 
@@ -34,6 +53,22 @@ function InitialMap(lat, lng) {
   
 }
 
+function loadTreeList() {
+
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+    });
+
+}
 //Hàm khởi tạo sự kiện khi click, hoặc thao tác với giao diện
 function register() {
     //$('#modalDetail').modal({ backdrop: 'static', keyboard: false });
@@ -48,17 +83,14 @@ function register() {
         $("#popup").show();
 
         getShapes(code);
-        dictricts(cityId);
     });
-    $('.polygonItems-dictrict').off('click').on('click', function (e) {
+    $('.polygonItems-district').off('click').on('click', function (e) {
         $('.polygonItems-dictrict').removeClass('active');
         e.preventDefault();
         var code = $(this).data('id');
         $(this).addClass('active');
-        var dictrictId = $(this).data('dictrict');
         getDetail(code);
         getShapes(code);
-        wards(dictrictId);
         $("#popup").show();
     });
     $('.polygonItems-ward').off('click').on('click', function (e) {
@@ -66,8 +98,7 @@ function register() {
         e.preventDefault();
         $(this).addClass('active');
         var code = $(this).data('id');
-        var ward = $('a.polygonItems-ward.active').html();
-        showModelDetail("", "", ward);
+      
         getShapes(code);
         $("#popup").show();
     });
