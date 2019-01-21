@@ -1,31 +1,27 @@
 ﻿@model Map4D.ViewModels.DrawPolygonViewModels
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Map";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
-    <div class="col-sm-2 col-md-2 col-lg-2">
-        <ul class="list-group" id="cities"></ul>
-    </div>
-    <div class="col-sm-1 col-md-1 col-lg-1" style="font-size: 95%;">
-        <ul class="list-group" id="dictricts"></ul>
-    </div>
-    <div class="col-sm-1 col-md-1 col-lg-1" style="font-size: 95%;">
-        <ul class="list-group" id="wards"></ul>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+        <div class="tree well">
+            <ul id="tree_view">
+
+            </ul>
+        </div>
     </div>
     <div class="col-sm-6 col-md-6 col-lg-6">
         <div id="xinkciti-map" style="height: 600px; width: 95%; position: absolute;"></div>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2">
-        <table id="popup" class="table">
-            
-        </table>
+        <table id="popup" class="table"></table>
     </div>
 
 </div>
 <br />
 <div class="col-sm-3 col-md-3 col-lg-3">
-    <div class="modal right fade" id="modalDetail" tabindex="-1" >
+    <div class="modal right fade" id="modalDetail" tabindex="-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -35,10 +31,8 @@
                 </div>
 
                 <div class="modal-body">
-                 <h4>Thông tin địa chính</h4>
-                 <table id="details" class="table">
-                     
-                 </table>
+                    <h4>Thông tin địa chính</h4>
+                    <table id="details" class="table"></table>
                 </div>
 
             </div><!-- modal-content -->

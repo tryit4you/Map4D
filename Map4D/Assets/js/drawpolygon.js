@@ -3,12 +3,30 @@
 };
 var map;
 $(function () {
-    register();
+    //register();
     cities();
-    loadCenter(16.036918, 108.218510);
-    $("#popup").hide();
+    tree();
+    //loadCenter(16.036918, 108.218510);
+    //$("#popup").hide();
+    $('.tree li.parent_li > span').each(function () {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        children.hide('fast');
+    });
 
 });
+function tree() {
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+        } else {
+            children.show('fast');
+        }
+        e.stopPropagation();
+    });
+    
+}
 function loadCenter(lat, lng, message) {
     var paramMapDefault = {
         lat: lat,
@@ -114,18 +132,14 @@ function cities() {
         type: 'post',
         dataType: 'json',
         success: function (res) {
-            var html = '';
+            var html = "";
             var data = res.data;
-            var template = $('#city-template').html();
             $.each(data, function (i, item) {
-                html += Mustache.render(template, {
-                    cityId: item.Id,
-                    code: item.Code,
-                    name: item.Name
-                });
+                html += "<li><span>" + item.Name + "</span>"+
+                "<ul><li><span>Cẩm lệ</span></li></ul>" +
+                "</li >";
             });
-            $('#cities').html(html);
-            register();
+            $('#tree_view').html(html);
         }
     });
 }

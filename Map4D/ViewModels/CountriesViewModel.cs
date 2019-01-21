@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Map4D.Models
+namespace Map4D.ViewModels
 {
     public class CountriesViewModel
     {
