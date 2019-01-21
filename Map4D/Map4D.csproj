@@ -149,19 +149,10 @@
     <Compile Include="ViewModels\DuLieuDoiTuongViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\css\materialize.css" />
-    <Content Include="Assets\css\materialize.min.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\js\drawpolygon.js" />
-    <Content Include="Assets\js\jquery.validate.min.js" />
-    <Content Include="Assets\js\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Assets\css\leaflet.css" />
-    <Content Include="Assets\js\leaflet.js" />
-    <Content Include="Assets\js\materialize.js" />
-    <Content Include="Assets\js\materialize.min.js" />
-    <Content Include="Assets\css\metisMenu.min.css" />
-    <Content Include="Assets\js\metisMenu.min.js" />
     <Content Include="Assets\js\mustache.min.js" />
+    <Content Include="Assets\js\positionDetail.js" />
     <Content Include="Assets\uploads\no-street-view.png" />
     <Content Include="Assets\uploads\page-loader.gif" />
     <Content Include="Content\bootstrap-theme.css" />

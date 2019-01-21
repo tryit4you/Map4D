@@ -3,6 +3,10 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section scripts{
+    <script src="~/Assets/js/drawpolygon.js"></script>
+}
+
 <div class="row">
     <div class="col-sm-2 col-md-2 col-lg-2">
         <ul class="list-group" id="cities"></ul>
@@ -17,11 +21,8 @@
         <div id="xinkciti-map" style="height: 600px; width: 95%; position: absolute;"></div>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2">
-        <table id="popup" class="table">
-            
-        </table>
+        <table id="popup" class="table"></table>
     </div>
-
 </div>
 <br />
 <script id="city-template" type="x-tmpl-mustache">

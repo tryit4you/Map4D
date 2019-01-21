@@ -1,17 +1,15 @@
 ﻿using CommonLogger.Libraries;
 using Map4D.Models;
 using Map4D.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace Map4D.Data.DAO
 {
     public class DrawPolygonDao : AdoHelper
     {
         private AdoHelper helper = null;
+
         /// <summary>
         /// Construct Open SqlConnection
         /// </summary>
@@ -20,6 +18,7 @@ namespace Map4D.Data.DAO
             string connection = AdoHelper.ConnectionString;
             helper = new AdoHelper(connection);
         }
+
         /// <summary>
         /// Get all City in VietNam
         /// </summary>
@@ -49,6 +48,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return listCity;
         }
+
         /// <summary>
         /// Get all District by City
         /// </summary>
@@ -79,6 +79,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return listDistrict;
         }
+
         /// <summary>
         /// Get all Ward by District
         /// </summary>
@@ -94,7 +95,7 @@ namespace Map4D.Data.DAO
                 CountriesViewModel Ward = new CountriesViewModel
                 {
                     Id = int.Parse(reader["Id"].ToString()),
-                    Code=reader["Code"].ToString(),
+                    Code = reader["Code"].ToString(),
                     Name = reader["Name"].ToString(),
                     Description = reader["Description"].ToString(),
                     Level = int.Parse(reader["Level"].ToString()),
@@ -109,6 +110,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return listWard;
         }
+
         public string GetDuLieuDoiTuongByCode(string Code)
         {
             string DuLieuDoiTuong = "[]";
@@ -121,6 +123,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return DuLieuDoiTuong;
         }
+
         public PointViewModel GetPointCenterByCode(string Code)
         {
             PointViewModel pointCenter = null;
@@ -135,6 +138,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return pointCenter;
         }
+
         private List<string> GetListIdByCode(string code)
         {
             List<string> Ids = new List<string>();
@@ -147,6 +151,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return Ids;
         }
+
         public List<string> GetShapeByCode(string code)
         {
             List<string> shapes = new List<string>();

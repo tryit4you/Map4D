@@ -1,17 +1,15 @@
 ﻿using CommonLogger.Libraries;
 using Map4D.Models;
 using Map4D.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace Map4D.Data.DAO
 {
     public class PolygonDetailDao
     {
         private AdoHelper helper = null;
+
         /// <summary>
         /// Construct Open SqlConnection
         /// </summary>
@@ -20,6 +18,7 @@ namespace Map4D.Data.DAO
             string connection = AdoHelper.ConnectionString;
             helper = new AdoHelper(connection);
         }
+
         public InfoPointViewModel GetInfoPointByLatLng(string Lat, string Lng)
         {
             List<PolygonDetailViewModel> listDetail = GetDetailByLatLng(Lat, Lng);
@@ -34,6 +33,7 @@ namespace Map4D.Data.DAO
             }
             return null;
         }
+
         public InfoPointViewModel GetInfoPointByWardCode(string wardCode)
         {
             string Ward = GetWardByCode(wardCode);
@@ -41,6 +41,7 @@ namespace Map4D.Data.DAO
             string City = GetCityByWardCode(wardCode);
             return new InfoPointViewModel() { City = City, District = District, Ward = Ward };
         }
+
         private List<PolygonDetailViewModel> GetDetailByLatLng(string lat, string lng)
         {
             List<PolygonDetailViewModel> polygonDetails = new List<PolygonDetailViewModel>();
@@ -59,6 +60,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return polygonDetails;
         }
+
         private string GetCityByWardCode(string wardCode)
         {
             string City = string.Empty;
@@ -72,6 +74,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return City;
         }
+
         private string GetDistrictByWardCode(string wardCode)
         {
             string District = string.Empty;
@@ -85,6 +88,7 @@ namespace Map4D.Data.DAO
             reader.Close();
             return District;
         }
+
         private string GetWardByCode(string Code)
         {
             string ward = string.Empty;
@@ -97,12 +101,14 @@ namespace Map4D.Data.DAO
             reader.Close();
             return ward;
         }
-        private bool CheckExitst(PolygonDetailViewModel polygon,PointViewModel pointCheck)
+
+        private bool CheckExitst(PolygonDetailViewModel polygon, PointViewModel pointCheck)
         {
             List<PointViewModel> listPoint = ConvertDetailToListPoint(polygon.DuLieuDoiTuong);
             bool result = CheckWithListPoint(listPoint, pointCheck);
             return result;
         }
+
         private List<PointViewModel> ConvertDetailToListPoint(string detail)
         {
             List<PointViewModel> listPoint = new List<PointViewModel>();
@@ -119,6 +125,7 @@ namespace Map4D.Data.DAO
             }
             return listPoint;
         }
+
         private bool CheckWithListPoint(List<PointViewModel> listPoint, PointViewModel pointCheck)
         {
             int i, j;
@@ -135,6 +142,7 @@ namespace Map4D.Data.DAO
             }
             return result;
         }
+
         public string GetPopupHtmlByCode(string Code)
         {
             string html = "<thead><tr><td colspan='2' style='font-weight:bold;'><span class='glyphicon glyphicon-tag'></span> Thông tin sơ lược</td></tr></thead><tbody><tr><td>Quốc gia</td><td>Việt Nam</td></tr>";
