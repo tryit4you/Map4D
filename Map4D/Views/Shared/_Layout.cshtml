@@ -3,31 +3,44 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-    <title>Test sql</title>
+    <title>Thực tập</title>
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <link href="~/Assets/css/metisMenu.min.css" rel="stylesheet" />
     <link href="/assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    @Styles.Render("~/Content/css")
 </head>
 <body style="overflow: unset;">
-    <div class="row">
-        <div class="col-md-12">
-            @RenderBody()
+    <div class="row" style="background-color:darkgrey;">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <a class="navbar-brand" href="/">Map4D</a>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+
         </div>
 
     </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            @RenderBody()
+        </div>
+    </div>
     <!--  Scripts-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/assets/js/materialize.js"></script>
-    <script src="/assets/js/mustache.min.js"></script>
     <script src="http://map.map4d.vn/data/jquery.cookie.min.js"></script>
     <script src="http://map.map4d.vn/data/react.production.min.js"></script>
     <script src="http://map.map4d.vn/data/react-dom.production.min.js"></script>
     <script src="http://map.map4d.vn/data/redux.min.js"></script>
     <link href="http://map.map4d.vn/styles/main.css" rel="stylesheet">
     <script src="http://map.map4d.vn/build/mapgl.bundle.js"></script>
-    <script src="~/Assets/js/drawpolygon.js"></script>s
+    <script src="~/Assets/js/mustache.min.js"></script>
+    <script src="~/Assets/js/drawpolygon.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>

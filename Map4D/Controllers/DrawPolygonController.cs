@@ -15,42 +15,13 @@ namespace Map4D.Controllers
     {
         private DrawPolygonBo drawPolygonBo = new DrawPolygonBo();
         // GET: DrawPolygon
-        public ActionResult Index(string cityId,string districtId,string code)
+        public ActionResult Index()
         {
-            string currentCityId=string.Empty;
-            string currentDistrictId=string.Empty;
-
-            IEnumerable<CountriesViewModel> listDistricts=null;
-            IEnumerable<CountriesViewModel> listWards=null;
-            if (cityId!=null)
-            {
-                currentCityId = cityId;
-                listDistricts = drawPolygonBo.GetAllWardByDistrict(int.Parse(cityId));
-            }
-            if (districtId != null)
-            {
-                currentDistrictId = districtId;
-                listWards = drawPolygonBo.GetAllWardByDistrict(int.Parse(districtId));
-            }
-            if (code!=null)
-            {
-                var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
-            }
-
-            var listCity = drawPolygonBo.GetAllCity();
-            var DrawPolygonViewModel = new DrawPolygonViewModels
-            {
-                CurrentCityId=currentCityId,
-                CurrentDistrictId=currentDistrictId,
-                Cities = listCity,
-                Districts = listDistricts,
-                Wards = listWards,
-            };
-            return View(DrawPolygonViewModel);
+            return View();
         }
         public ActionResult GetShapesByCode(string code)
         {
-            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
+            var shapes = drawPolygonBo.GetDuLieuDoiTuongByCode(code);
             return Json(new
             {
                 data=shapes
@@ -84,7 +55,7 @@ namespace Map4D.Controllers
         }
         public JsonResult getWard(string code)
         {
-            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
+            var shapes = drawPolygonBo.GetDuLieuDoiTuongByCode(code);
             
             return Json(new
             {
@@ -93,7 +64,7 @@ namespace Map4D.Controllers
         }
         public JsonResult GetShapes(string code)
         {
-            var shapes = drawPolygonBo.getDuLieuDoiTuongByCode(code);
+            var shapes = drawPolygonBo.GetDuLieuDoiTuongByCode(code);
             PointViewModel pointCenter = drawPolygonBo.GetPointCenterByCode(code);
             return Json(new
             {

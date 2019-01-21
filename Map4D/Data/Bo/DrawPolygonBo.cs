@@ -53,7 +53,7 @@ namespace Map4D.Data.BO
         /// <returns></returns>
         public string GetDuLieuDoiTuongByCode(string Value)
         {
-            return drawPolygonDao.getDuLieuDoiTuongByCode(Value);
+            return drawPolygonDao.GetDuLieuDoiTuongByCode(Value);
         }
         public PointViewModel GetPointCenterByCode(string Code)
         {
