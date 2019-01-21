@@ -9,6 +9,7 @@ namespace CommonLogger.Libraries
     {
         // Internal members
         protected string _connString = null;
+
         protected SqlConnection _conn = null;
         protected SqlTransaction _trans = null;
         protected bool _disposed = false;
@@ -217,7 +218,7 @@ namespace CommonLogger.Libraries
             }
         }
 
-        #endregion
+        #endregion Exec Members
 
         #region Transaction Members
 
@@ -256,7 +257,7 @@ namespace CommonLogger.Libraries
             }
         }
 
-        #endregion
+        #endregion Transaction Members
 
         #region IDisposable Members
 
@@ -285,6 +286,6 @@ namespace CommonLogger.Libraries
             }
         }
 
-        #endregion
+        #endregion IDisposable Members
     }
 }

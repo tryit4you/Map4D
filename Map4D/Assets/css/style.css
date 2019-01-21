@@ -53,7 +53,6 @@ ul#wards li {
 .active {
     color: red;
 }
-
 .logo {
     display: none !important;
 }
@@ -123,42 +122,22 @@ ul#wards li {
     border-bottom-color: #EEEEEE;
     background-color: #FAFAFA;
 }
-
-/* ----- v CAN BE DELETED v ----- */
-
-
-.demo {
-    padding-top: 60px;
-    padding-bottom: 110px;
+#myNavbar {
+    background-color: #1e88e5;
+    box-shadow: 0px 0px 2px black;
 }
-
-.btn-demo {
-    margin: 15px;
-    padding: 10px 15px;
-    border-radius: 0;
-    font-size: 16px;
-    background-color: #FFFFFF;
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: transparent !important;
 }
-
-    .btn-demo:focus {
-        outline: 0;
-    }
-
-.demo-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 15px;
-    background-color: #212121;
-    text-align: center;
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: transparent !important;
 }
-
-    .demo-footer > a {
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 16px;
-        color: #fff;
-    }
-.modal-backdrop {
-    opacity: 0 !important;
+ul.nav.navbar-nav > li a {
+    color: white;
+    text-transform: capitalize;
+}
+a.navbar-brand {
+    color: white;
 }
