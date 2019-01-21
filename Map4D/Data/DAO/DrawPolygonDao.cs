@@ -24,6 +24,35 @@ namespace Map4D.Data.DAO
         /// Get all City in VietNam
         /// </summary>
         /// <returns>List<CountriesViewModel></returns>
+        public List<CountriesViewModel> GetAllData()
+        {
+            List<CountriesViewModel> data = new List<CountriesViewModel>();
+            string sqlQuery = "SELECT * FROM Countries  ORDER BY Level";
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            while (reader.Read())
+            {
+                CountriesViewModel allData = new CountriesViewModel
+                {
+                    Id = int.Parse(reader["Id"].ToString()),
+                    Name = reader["Name"].ToString(),
+                    Code = reader["Code"].ToString(),
+                    Description = reader["Description"].ToString(),
+                    Level = int.Parse(reader["Level"].ToString()),
+                    Type = reader["Type"].ToString(),
+                    ParentId = int.Parse(reader["ParentId"].ToString()),
+                    IsVisible = int.Parse(reader["IsVisible"].ToString()),
+                    IsState = bool.Parse(reader["IsState"].ToString()),
+                    NameKhongDau = reader["NameKhongDau"].ToString()
+                };
+                data.Add(allData);
+            }
+            reader.Close();
+            return data;
+        }
+        /// <summary>
+        /// Get all City in VietNam
+        /// </summary>
+        /// <returns>List<CountriesViewModel></returns>
         public List<CountriesViewModel> GetAllCity()
         {
             List<CountriesViewModel> listCity = new List<CountriesViewModel>();
@@ -48,6 +77,31 @@ namespace Map4D.Data.DAO
             }
             reader.Close();
             return listCity;
+        }
+        public List<CountriesViewModel> GetByLevel(int level)
+        {
+            List<CountriesViewModel> listByLevel = new List<CountriesViewModel>();
+            string sqlQuery = $"SELECT * FROM Countries WHERE Level = {level}";
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery);
+            while (reader.Read())
+            {
+                CountriesViewModel data = new CountriesViewModel
+                {
+                    Id = int.Parse(reader["Id"].ToString()),
+                    Name = reader["Name"].ToString(),
+                    Code = reader["Code"].ToString(),
+                    Description = reader["Description"].ToString(),
+                    Level = int.Parse(reader["Level"].ToString()),
+                    Type = reader["Type"].ToString(),
+                    ParentId = int.Parse(reader["ParentId"].ToString()),
+                    IsVisible = int.Parse(reader["IsVisible"].ToString()),
+                    IsState = bool.Parse(reader["IsState"].ToString()),
+                    NameKhongDau = reader["NameKhongDau"].ToString()
+                };
+                listByLevel.Add(data);
+            }
+            reader.Close();
+            return listByLevel;
         }
         /// <summary>
         /// Get all District by City

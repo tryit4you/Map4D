@@ -1,0 +1,37 @@
+﻿@model Map4D.ViewModels.DrawPolygonViewModels
+@{
+    ViewBag.Title = "GetAllDataPartial";
+    Layout =null;
+}
+
+<div class="tree well">
+    <ul class="big-parent">
+        @foreach (var city in Model.Cities)
+        {
+            <li class="level1">
+                <span><a href="#" class="polygonItems" data-id="@city.Code" >
+    @city.Name
+</a> </span>
+                @foreach (var district in Model.Districts.Where(x => x.ParentId == city.Id))
+                {
+                    <ul>
+                        <li>
+                            <span><a href="#" class="polygonItems-district" data-id="@district.Code">@district.Name</a></span>
+                            @foreach (var ward in Model.Wards.Where(x => x.ParentId == district.Id))
+                            {
+                                <ul>
+                                    <li>
+                                        <span><a href="#" class="polygonItems-ward" data-id="@ward.Code">@ward.Name</a></span>
+
+                                    </li>
+                                </ul>
+                            }
+                        </li>
+                    </ul>
+                }
+
+            </li>
+        }
+    </ul>
+
+</div>

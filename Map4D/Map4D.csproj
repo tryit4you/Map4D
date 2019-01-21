@@ -199,6 +199,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\DrawPolygon\Index.cshtml" />
     <Content Include="Views\PolygonDetail\Index.cshtml" />
+    <Content Include="Views\DrawPolygon\GetAllDataPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

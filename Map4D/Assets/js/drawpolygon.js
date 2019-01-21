@@ -1,13 +1,32 @@
 ﻿function hidePopup() {
-   $("#popup").hide();
-};
-var map;
+    $("#popup").hide();
+}
+
 $(function () {
     register();
     cities();
     loadCenter(16.036918, 108.218510);
     $("#popup").hide();
+   
+   // loadTreeList();
 
+});
+$(function () {
+
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+        } else {
+            $(this).parent('li.parent_li').children().removeAttr('style');
+            children.show('fast');
+        }
+        
+
+        e.stopPropagation();
+    });
+    $('.level1').find("ul").hide();
 });
 function loadCenter(lat, lng, message) {
     var paramMapDefault = {
@@ -62,6 +81,23 @@ function drawPolygon(shapes) {
 
 
 }
+
+function loadTreeList() {
+
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+    });
+
+}
 function register() {
     //$('#modalDetail').modal({ backdrop: 'static', keyboard: false });
     $('.polygonItems').off('click').on('click', function (e) {
@@ -73,9 +109,8 @@ function register() {
         getDetail(code);
         //$('#modalDetail').modal('show');
         $("#popup").show();
-     
+
         getShapes(code);
-        dictrict(cityId);
     });
     $('.polygonItems-dictrict').off('click').on('click', function (e) {
         $('.polygonItems-dictrict').removeClass('active');
@@ -85,7 +120,6 @@ function register() {
         var dictrictId = $(this).data('dictrict');
         getDetail(code);
         getShapes(code);
-        ward(dictrictId);
         $("#popup").show();
     });
     $('.polygonItems-ward').off('click').on('click', function (e) {
@@ -94,15 +128,15 @@ function register() {
         $(this).addClass('active');
         var code = $(this).data('id');
         var ward = $('a.polygonItems-ward.active').html();
-        showModelDetail("", "", ward);
+      
         getShapes(code);
         $("#popup").show();
     });
-    $("#menu-close").on('click',function (e) {
+    $("#menu-close").on('click', function (e) {
         e.preventDefault();
         $("#sidebar-wrapper").toggleClass("active");
     });
-    $("#menu-toggle").on('click',function (e) {
+    $("#menu-toggle").on('click', function (e) {
         e.preventDefault();
         $("#sidebar-wrapper").toggleClass("active");
     });
