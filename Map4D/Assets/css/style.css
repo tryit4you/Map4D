@@ -6,11 +6,13 @@
  * Made By MaterializeCSS.com
  */
 
+ul > li > a:hover {
+    text-decoration: none;
+}
 
-    ul#cities li > a {
-        padding: 2px 8px;
-   
-    }
+ul#cities li > a {
+    padding: 2px 8px;
+}
 
 ul#cities li {
     border: 1px solid #f1f1f1;
@@ -18,17 +20,18 @@ ul#cities li {
 }
 
 
-    ul#dictricts li > a {
-        padding: 2px 8px;
-     
-    }
+ul#dictricts li > a {
+    padding: 2px 8px;
+}
+
 li.ul-list:last-child {
     border: 1px solid #f1f1f1 !important;
-
 }
+
 .col.s2 {
     margin-left: -15px !important;
 }
+
 ul#dictricts li {
     border: 1px solid #f1f1f1;
     border-bottom: none;
@@ -36,23 +39,25 @@ ul#dictricts li {
 
 ul#wards li > a {
     padding: 2px 8px;
- 
 }
 
 ul#wards li {
     border: 1px solid #f1f1f1;
     border-bottom: none;
 }
-.content{
-    min-height:500px;
-    
+
+.content {
+    min-height: 500px;
 }
-.active{
-    color:red;
+
+.active {
+    color: red;
 }
-.nav {
+
+.logo {
     display: none !important;
 }
+
 .navbar {
     display: none !important;
 }
@@ -61,7 +66,6 @@ ul#wards li {
 * Add "left" or "right" in modal parent div, after class="modal".
 * Get free snippets on bootpen.com
 *******************************/
-.modal.left .modal-dialog,
 .modal.right .modal-dialog {
     position: fixed;
     margin: auto;
@@ -73,13 +77,12 @@ ul#wards li {
     transform: translate3d(0%, 0, 0);
 }
 
-.modal.left .modal-content,
+
 .modal.right .modal-content {
     height: 100%;
     overflow-y: auto;
 }
 
-.modal.left .modal-body,
 .modal.right .modal-body {
     padding: 15px 15px 80px;
 }
@@ -122,9 +125,7 @@ ul#wards li {
 }
 
 /* ----- v CAN BE DELETED v ----- */
-body {
-    background-color: #78909C;
-}
+
 
 .demo {
     padding-top: 60px;
@@ -158,3 +159,6 @@ body {
         font-size: 16px;
         color: #fff;
     }
+.modal-backdrop {
+    opacity: 0 !important;
+}
