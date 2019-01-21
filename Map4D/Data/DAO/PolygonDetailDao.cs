@@ -122,11 +122,11 @@ namespace Map4D.Data.DAO
         private bool CheckWithListPoint(List<PointViewModel> listPoint, PointViewModel pointCheck)
         {
             int i, j;
-            bool result = false;    
+            bool result = false;
             int countListPoint = listPoint.Count;
             for (i = 0, j = countListPoint - 1; i < countListPoint; j = i++)
             {
-                if (((listPoint[i].Lat > pointCheck.Lat) == (listPoint[j].Lat < pointCheck.Lat)) &&
+                if (((listPoint[i].Lat > pointCheck.Lat) != (listPoint[j].Lat > pointCheck.Lat)) &&
                  (pointCheck.Lng < (listPoint[j].Lng - listPoint[i].Lng) * (pointCheck.Lat - listPoint[i].Lat)
                  / (listPoint[j].Lat - listPoint[i].Lat) + listPoint[i].Lng))
                 {
@@ -134,6 +134,30 @@ namespace Map4D.Data.DAO
                 }
             }
             return result;
+        }
+        public string GetPopupHtmlByCode(string Code)
+        {
+            string html = "<thead><tr><td colspan='2' style='font-weight:bold;'><span class='glyphicon glyphicon-tag'></span> Thông tin sơ lược</td></tr></thead><tbody><tr><td>Quốc gia</td><td>Việt Nam</td></tr>";
+            if (Code.Length == 12)
+            {
+                InfoPointViewModel infoPoint = GetInfoPointByWardCode(Code);
+                html += $"<tr><td>Tỉnh/Thành phố</td><td>{infoPoint.City}</td></tr><tr><td>Quận/Huyện</td><td>{infoPoint.District}</td></tr><tr><td>Xã/Phường</td><td>{infoPoint.Ward}</td></tr>";
+                return html;
+            }
+            if (Code.Length == 9)
+            {
+                string District = GetDistrictByWardCode(Code + "000");
+                string City = GetCityByWardCode(Code + "000");
+                html += $"<tr><td>Tỉnh/Thành phố</td><td>{City}</td></tr><tr><td>Quận/Huyện</td><td>{District}</td></tr>";
+                return html;
+            }
+            if (Code.Length == 6)
+            {
+                string City = GetCityByWardCode(Code + "000000");
+                html += $"<tr><td>Tỉnh/Thành phố</td><td>{City}</td></tr>";
+                return html;
+            }
+            return html + "</tbody>";
         }
     }
 }
