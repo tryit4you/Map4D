@@ -19,16 +19,16 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Get InfoPoint by LatLng
         /// </summary>
-        /// <param name="Lat"></param>
-        /// <param name="Lng"></param>
-        /// <returns></returns>
+        /// <param name="Lat">Latitude</param>
+        /// <param name="Lng">Longitude</param>
+        /// <returns>InfoPointViewModel : City,District,Ward</returns>
         public InfoPointViewModel GetInfoPointByLatLng(string Lat, string Lng)
         {
             List<PolygonDetailViewModel> listDetail = GetDetailByLatLng(Lat, Lng);
             PointViewModel pointCheck = new PointViewModel() { Lng = double.Parse(Lng), Lat = double.Parse(Lat) };
             foreach (PolygonDetailViewModel polygon in listDetail)
             {
-                bool result = CheckExitstPointInPolygon(polygon, pointCheck);
+                bool result = CheckExistPointInPolygon(polygon, pointCheck);
                 if (result)
                 {
                     return GetInfoPointByWardCode(polygon.Value);
@@ -39,8 +39,8 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Get InfoPoint by WardCode
         /// </summary>
-        /// <param name="wardCode"></param>
-        /// <returns></returns>
+        /// <param name="wardCode">Ward Code</param>
+        /// <returns>InfoPointViewModel : City,District,Ward</returns>
         public InfoPointViewModel GetInfoPointByWardCode(string wardCode)
         {
             string Ward = GetWardByWardCode(wardCode);
@@ -51,9 +51,9 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Get ListPolygonDetail For LatLng
         /// </summary>
-        /// <param name="Lat"></param>
-        /// <param name="Lng"></param>
-        /// <returns></returns>
+        /// <param name="Lat">Latitude</param>
+        /// <param name="Lng">Longitude</param>
+        /// <returns>List<PolygonDetailViewModel> : Id,ObjectData,Value</returns>
         private List<PolygonDetailViewModel> GetDetailByLatLng(string Lat, string Lng)
         {
             List<PolygonDetailViewModel> listPolygonDetails = new List<PolygonDetailViewModel>();
@@ -78,8 +78,8 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Get City by WardCode
         /// </summary>
-        /// <param name="wardCode"></param>
-        /// <returns></returns>
+        /// <param name="wardCode">wardCode</param>
+        /// <returns>CityName</returns>
         private string GetCityByWardCode(string wardCode)
         {
             string City = string.Empty;
@@ -99,8 +99,8 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Get District by WardCode
         /// </summary>
-        /// <param name="wardCode"></param>
-        /// <returns></returns>
+        /// <param name="wardCode">WardCode</param>
+        /// <returns>DistrictName</returns>
         private string GetDistrictByWardCode(string wardCode)
         {
             string District = string.Empty;
@@ -120,8 +120,8 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Get Ward by wardCode
         /// </summary>
-        /// <param name="wardCode"></param>
-        /// <returns></returns>
+        /// <param name="wardCode">wardCode</param>
+        /// <returns>WardName</returns>
         private string GetWardByWardCode(string wardCode)
         {
             string Ward = string.Empty;
@@ -138,12 +138,12 @@ namespace Map4D.Data.DAO
             return Ward;
         }
         /// <summary>
-        /// Check Exitst Point In Polygon
+        /// Check Exist Point In Polygon
         /// </summary>
-        /// <param name="polygon"></param>
-        /// <param name="pointCheck"></param>
-        /// <returns></returns>
-        private bool CheckExitstPointInPolygon(PolygonDetailViewModel polygon,PointViewModel pointCheck)
+        /// <param name="polygon">PolygonDetail: Id,ObjectData,Value</param>
+        /// <param name="pointCheck">PointCheck exist in Polygon : Lat,Lng</param>
+        /// <returns>True : Exist, False : Non-exist</returns>
+        private bool CheckExistPointInPolygon(PolygonDetailViewModel polygon,PointViewModel pointCheck)
         {
             List<PointViewModel> listPointTop = ConvertObjectDataToListPoint(polygon.ObjectData);
             return CheckWithListPoint(listPointTop, pointCheck);
@@ -151,8 +151,8 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Convert ObjectData to ListPoint
         /// </summary>
-        /// <param name="ObjectData"></param>
-        /// <returns></returns>
+        /// <param name="ObjectData">ObjectData for PolygonDetail</param>
+        /// <returns>List<PointViewModel> : List vertices of Polygon</returns>
         private List<PointViewModel> ConvertObjectDataToListPoint(string ObjectData)
         {
             List<PointViewModel> listPoint = new List<PointViewModel>();
@@ -174,9 +174,9 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Check Exitst with ListPoint
         /// </summary>
-        /// <param name="listPoint"></param>
-        /// <param name="pointCheck"></param>
-        /// <returns></returns>
+        /// <param name="listPoint">List vertices of Polygon</param>
+        /// <param name="pointCheck">PointCheck exist in Polygon : Lat,Lng</param>
+        /// <returns>True : Exist, False : Non-exist</returns>
         private bool CheckWithListPoint(List<PointViewModel> listPoint, PointViewModel pointCheck)
         {
             int i, j;
@@ -199,8 +199,8 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Get PopupHtml by Code
         /// </summary>
-        /// <param name="Code"></param>
-        /// <returns></returns>
+        /// <param name="Code">Code of City or District or Ward</param>
+        /// <returns>Html of Popup Info : Country,City,District,Ward</returns>
         public string GetPopupHtmlByCode(string Code)
         {
             string html = "<thead><tr><td colspan='2' style='font-weight:bold;'><span class='glyphicon glyphicon-tag'></span> Thông tin sơ lược</td></tr></thead><tbody><tr><td>Quốc gia</td><td>Việt Nam</td></tr>";

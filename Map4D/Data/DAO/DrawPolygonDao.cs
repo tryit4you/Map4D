@@ -17,17 +17,18 @@ namespace Map4D.Data.DAO
             helper = new AdoHelper(connection);
         }
         /// <summary>
-        /// Get all City in VietNam
+        /// Get allData in VietNam
         /// </summary>
-        /// <returns>List<CountriesViewModel></returns>
+        /// <returns>List<CountriesViewModel> : All Data in VietNam</returns>
         public List<CountriesViewModel> GetAllData()
         {
-            List<CountriesViewModel> data = new List<CountriesViewModel>();
-            string sqlQuery = "SELECT * FROM Countries  ORDER BY Level";
+            List<CountriesViewModel> allData = new List<CountriesViewModel>();
+            string sqlQuery = "SELECT * FROM Countries ORDER BY Level";
+
             SqlDataReader reader = helper.ExecDataReader(sqlQuery);
             while (reader.Read())
             {
-                CountriesViewModel allData = new CountriesViewModel
+                CountriesViewModel Data = new CountriesViewModel
                 {
                     Id = int.Parse(reader["Id"].ToString()),
                     Name = reader["Name"].ToString(),
@@ -40,15 +41,16 @@ namespace Map4D.Data.DAO
                     IsState = bool.Parse(reader["IsState"].ToString()),
                     NameKhongDau = reader["NameKhongDau"].ToString()
                 };
-                data.Add(allData);
+                allData.Add(Data);
             }
             reader.Close();
-            return data;
+
+            return allData;
         }
         /// <summary>
         /// Get all City in VietNam
         /// </summary>
-        /// <returns>List<CountriesViewModel></returns>
+        /// <returns>List<CountriesViewModel>:all City in VietNam</returns>
         public List<CountriesViewModel> GetAllCity()
         {
             List<CountriesViewModel> listCity = new List<CountriesViewModel>();
@@ -76,6 +78,11 @@ namespace Map4D.Data.DAO
 
             return listCity;
         }
+        /// <summary>
+        /// Get Countries by Level
+        /// </summary>
+        /// <param name="level">int level</param>
+        /// <returns>List Countries by Level</returns>
         public List<CountriesViewModel> GetByLevel(int level)
         {
             List<CountriesViewModel> listByLevel = new List<CountriesViewModel>();
@@ -170,8 +177,8 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Get ObjectData by Code
         /// </summary>
-        /// <param name="Code"></param>
-        /// <returns></returns>
+        /// <param name="Code">CityCode or DistrictCode or WardCode</param>
+        /// <returns>string Json ObjectData</returns>
         public string GetObjectDataByCode(string Code)
         {
             string objectData = "[]";
@@ -190,8 +197,8 @@ namespace Map4D.Data.DAO
         /// <summary>
         /// Get PointCenter by Code
         /// </summary>
-        /// <param name="Code"></param>
-        /// <returns></returns>
+        /// <param name="Code">CityCode or DistrictCode or WardCode</param>
+        /// <returns>PointCenter of Pylogon: Lat,Lngs</returns>
         public PointViewModel GetPointCenterByCode(string Code)
         {
             PointViewModel pointCenter = null;
