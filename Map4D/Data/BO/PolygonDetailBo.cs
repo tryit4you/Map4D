@@ -9,8 +9,8 @@ namespace Map4D.Data.BO
         /// <summary>
         /// Get InfoPoint by WardCode
         /// </summary>
-        /// <param name="wardCode"></param>
-        /// <returns></returns>
+        /// <param name="wardCode">Ward Code</param>
+        /// <returns>InfoPointViewModel : City,District,Ward</returns>
         public InfoPointViewModel GetInfoPointByWardCode(string wardCode)
         {
             return polygonDetailDao.GetInfoPointByWardCode(wardCode);
@@ -18,9 +18,9 @@ namespace Map4D.Data.BO
         /// <summary>
         /// Get InfoPoint by LatLng
         /// </summary>
-        /// <param name="Lat"></param>
-        /// <param name="Lng"></param>
-        /// <returns></returns>
+        /// <param name="Lat">Latitude</param>
+        /// <param name="Lng">Longitude</param>
+        /// <returns>InfoPointViewModel : City,District,Ward</returns>
         public InfoPointViewModel GetInfoPointByLatLng(string Lat, string Lng)
         {
             return polygonDetailDao.GetInfoPointByLatLng(Lat, Lng);
@@ -28,8 +28,8 @@ namespace Map4D.Data.BO
         /// <summary>
         /// Get PopupHtml by Code
         /// </summary>
-        /// <param name="Code"></param>
-        /// <returns></returns>
+        /// <param name="Code">Code of City or District or Ward</param>
+        /// <returns>Html of Popup Info : Country,City,District,Ward</returns>
         public string GetPopupHtmlByCode(string Code)
         {
             return polygonDetailDao.GetPopupHtmlByCode(Code);

@@ -2,10 +2,16 @@
     ViewBag.Title = "Thông tin địa điểm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<style>
+    #mapzzz {
+        position: fixed !important;
+        width: 98% !important;
+        height: 85% !important;
+    }
+</style>
 <div class="row">
     <div class="col-md-12">
-        <div id="xinkciti-map" style="height: 800px; "></div>
+        <div id="xinkciti-map"></div>
     </div>
 </div>
 @section scripts{
