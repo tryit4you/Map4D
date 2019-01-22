@@ -51,8 +51,9 @@ ul#wards li {
 }
 
 .active {
-    color: red;
+    color: green;
 }
+
 .logo {
     display: none !important;
 }
@@ -122,28 +123,33 @@ ul#wards li {
     border-bottom-color: #EEEEEE;
     background-color: #FAFAFA;
 }
+
 #myNavbar {
     background-color: #1e88e5;
     box-shadow: 0px 0px 2px black;
 }
+
 .nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
     background-color: transparent !important;
 }
+
 .nav > li > a:focus, .nav > li > a:hover {
     text-decoration: none;
     background-color: transparent !important;
 }
 
-    .demo-footer > a {
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 16px;
-        color: #fff;
-    }
+.demo-footer > a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+}
+
 .modal-backdrop {
     opacity: 0 !important;
 }
+
 .tree {
     min-height: 20px;
     padding: 19px;
@@ -190,11 +196,11 @@ ul#wards li {
         .tree li span {
             -moz-border-radius: 5px;
             -webkit-border-radius: 5px;
-            border: 1px solid #999;
-            border-radius: 5px;
-            display: inline-block;
-            padding: 3px 8px;
-            text-decoration: none
+            /* border: 1px solid #999; */
+            /* border-radius: 5px; */
+            /* display: inline-block; */
+            /* padding: 3px 8px; */
+            text-decoration: none;
         }
 
         .tree li.parent_li > span {
@@ -210,17 +216,20 @@ ul#wards li {
     }
 
     .tree li.parent_li > span:hover, .tree li.parent_li > span:hover + ul li span {
-        background: #eee;
-        border: 1px solid #94a0b4;
-        color: #000
+        /* background: #eee; */
+        /* border: 1px solid #94a0b4; */
+        /* color: #000; */
     }
+
 ul.nav.navbar-nav > li a {
     color: white;
     text-transform: capitalize;
 }
+
 a.navbar-brand {
     color: white;
 }
+
 .tree {
     height: 533px;
     overflow-y: scroll;
