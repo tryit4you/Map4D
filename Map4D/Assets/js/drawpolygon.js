@@ -1,8 +1,7 @@
 ﻿$(function () {
     register();
-    cities();
     //Khởi tạo bản đồ với tham số mặc định
-    InitialMap(16.036918, 108.218510);
+    InitialMap(16.036918, 108.218510,4);
     $("#popup").hide();
    
    // loadTreeList();
@@ -32,11 +31,11 @@ function hidePopup() {
 }
 
 //Hàm khởi tạo bản đồ với tham số lat,lng
-function InitialMap(lat, lng) {
+function InitialMap(lat, lng,zoom) {
     var paramMapDefault = {
         lat: lat,
         lng: lng,
-        zoom: 8,
+        zoom: zoom,
         mode: "2d"
     };
     paramMap = {
@@ -114,92 +113,17 @@ function register() {
 
 //Hàm vẽ đường viền của tỉnh thành phố, quận huyện...
 //shapes tham số là dữ liệu để vẽ vào leafletjs
-function drawPolygon(shapes, pointCenter) {
-    InitialMap(pointCenter.Lat, pointCenter.Lng);
+function drawPolygon(shapes, pointCenter,zoom) {
+    InitialMap(pointCenter.Lat, pointCenter.Lng,zoom);
     var jsonObj = JSON.parse(shapes);
     var draw = new L.GeoJSON(jsonObj);
     map.leaflet.addLayer(draw);
 }
 
-//Hàm load danh sách thành phố
-function cities() {
-    $.ajax({
-        url: '/drawpolygon/listcity',
-        type: 'post',
-        dataType: 'json',
-        success: function (res) {
-            var html = '';
-            var data = res.data;
-            var template = $('#city-template').html();
-            $.each(data, function (i, item) {
-                html += Mustache.render(template, {
-                    cityId: item.Id,
-                    code: item.Code,
-                    name: item.Name
-                });
-            });
-            $('#cities').html(html);
-            register();
-        }
-    });
-}
-
-//Hàm load danh sách quận huyện
-function dictricts(cityId) {
-    $.ajax({
-        url: '/drawpolygon/listdictrict',
-        data: {
-            cityId: cityId
-        },
-        type: 'post',
-        dataType: 'json',
-        success: function (res) {
-            var html = '';
-            var data = res.data;
-            var template = $('#dictrict-template').html();
-            $.each(data, function (i, item) {
-                html += Mustache.render(template, {
-                    dictrictId: item.Id,
-                    code: item.Code,
-                    name: item.Name
-                });
-            });
-            $('#dictricts').html(html);
-
-            register();
-        }
-    });
-}
-
-//Hàm load danh sách xã/phường
-function wards(dictrictId) {
-    $.ajax({
-        url: '/drawpolygon/ListWard',
-        data: {
-            dictrictId: dictrictId
-        },
-        type: 'post',
-        dataType: 'json',
-        success: function (res) {
-            var html = '';
-            var data = res.data;
-            var template = $('#ward-template').html();
-            $.each(data, function (i, item) {
-                html += Mustache.render(template, {
-                    wardId: item.Id,
-                    code: item.Code,
-                    name: item.Name
-                });
-            });
-            $('#wards').html(html);
-
-            register();
-        }
-    });
-}
 
 //Hàm lấy dữ liệu truyền vào hàm vẽ
 function getShapes(code) {
+    var zoom = 0;
     $.ajax({
         url: '/drawpolygon/GetShapes',
         data: {
@@ -208,9 +132,25 @@ function getShapes(code) {
         type: 'post',
         dataType: 'json',
         success: function (res) {
+  
+            switch (code.length) {
+                case 6:
+                    zoom = 8;
+                    break;
+                case 9:
+                    zoom = 12;
+                    break;
+                case 12:
+                    zoom = 14;
+                    break;
+                default:
+                    zoom = 8;
+                    break;
+            }
             var shapes = res.shapes;
             var pointCenter = res.pointCenter;
-            drawPolygon(shapes, pointCenter);
+            console.log(zoom);
+            drawPolygon(shapes, pointCenter, zoom);
         }
     });
 }
