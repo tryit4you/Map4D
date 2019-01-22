@@ -187,8 +187,7 @@ namespace Map4D.Data.DAO
             for (i = 0, j = countListPoint - 1; i < countListPoint; j = i++)
             {
                 if (((listPoint[i].Lat > pointCheck.Lat) != (listPoint[j].Lat > pointCheck.Lat)) &&
-                 (pointCheck.Lng < (listPoint[j].Lng - listPoint[i].Lng) * (pointCheck.Lat - listPoint[i].Lat)
-                 / (listPoint[j].Lat - listPoint[i].Lat) + listPoint[i].Lng))
+                 (pointCheck.Lng < (listPoint[j].Lng - listPoint[i].Lng) * (pointCheck.Lat - listPoint[i].Lat)/(listPoint[j].Lat - listPoint[i].Lat) + listPoint[i].Lng))
                 {
                     result = !result;
                 }

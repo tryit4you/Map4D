@@ -24,7 +24,9 @@ namespace Map4D.Controllers
         /// Load TreeView Countries
         /// </summary>
         /// <returns></returns>
+        
         [OutputCache(Duration = 17280)]
+
         public ActionResult GetAllDataPartial()
         {
             var listCity = drawPolygonBo.GetAllCity();
