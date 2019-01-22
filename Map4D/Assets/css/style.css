@@ -179,10 +179,26 @@ a.navbar-brand {
 }
 
 .tree {
-    height: 85vh;
+    height: 92vh;
     overflow-y: scroll;
     padding: 19px 0px !important;
 }
-.tree{
-    display:none;
+.tree {
+    display: none;
+    margin-left: -6px;
 }
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px grey;
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #1e87e5;
+    border-radius: 10px;
+}
+    ::-webkit-scrollbar-thumb:hover {
+        background: #1e88e5;
+    }
