@@ -15,13 +15,13 @@ namespace Map4D.Data.BO
         {
             return drawPolygonDao.GetAllCity();
         }
-        public List<CountriesViewModel> GetAllDistrict(int level)
+        public List<CountriesViewModel> GetAllDistrict()
         {
-            return drawPolygonDao.GetByLevel(level);
+            return drawPolygonDao.GetByLevel(2);
         }
-        public List<CountriesViewModel> GetAllWard(int level)
+        public List<CountriesViewModel> GetAllWard()
         {
-            return drawPolygonDao.GetByLevel(level);
+            return drawPolygonDao.GetByLevel(3);
         }
         /// <summary>
         /// Get all District by City
@@ -44,8 +44,8 @@ namespace Map4D.Data.BO
         /// <summary>
         /// Get ObjectData by Code
         /// </summary>
-        /// <param name="Value"></param>
-        /// <returns></returns>
+        /// <param name="Code">CityCode or DistrictCode or WardCode</param>
+        /// <returns>string Json ObjectData</returns>
         public string GetObjectDataByCode(string Value)
         {
             return drawPolygonDao.GetObjectDataByCode(Value);
@@ -53,12 +53,16 @@ namespace Map4D.Data.BO
         /// <summary>
         /// Get PointCenter by Code
         /// </summary>
-        /// <param name="Code"></param>
-        /// <returns></returns>
+        /// <param name="Code">CityCode or DistrictCode or WardCode</param>
+        /// <returns>PointCenter of Pylogon: Lat,Lngs</returns>
         public PointViewModel GetPointCenterByCode(string Code)
         {
             return drawPolygonDao.GetPointCenterByCode(Code);
         }
+        /// <summary>
+        /// Get allData in VietNam
+        /// </summary>
+        /// <returns>List<CountriesViewModel> : All Data in VietNam</returns>
         public List<CountriesViewModel> GetAllData()
         {
             return drawPolygonDao.GetAllData();

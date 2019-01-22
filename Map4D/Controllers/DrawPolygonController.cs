@@ -16,18 +16,20 @@ namespace Map4D.Controllers
         /// <param name="districtId"></param>
         /// <param name="code"></param>
         /// <returns></returns>
-     
-        // GET: DrawPolygon
         public ActionResult Index()
         {
             return View();
         }
+        /// <summary>
+        /// Load TreeView Countries
+        /// </summary>
+        /// <returns></returns>
         [OutputCache(Duration = 17280)]
         public ActionResult GetAllDataPartial()
         {
             var listCity = drawPolygonBo.GetAllCity();
-            var listDistrict = drawPolygonBo.GetAllDistrict(2);
-            var listWard = drawPolygonBo.GetAllWard(3);
+            var listDistrict = drawPolygonBo.GetAllDistrict();
+            var listWard = drawPolygonBo.GetAllWard();
             var drawPolygonViewModel = new DrawPolygonViewModels
             {
                 Cities = listCity,

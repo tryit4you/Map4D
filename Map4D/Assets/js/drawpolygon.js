@@ -81,7 +81,7 @@ function register() {
         e.preventDefault();
         $(this).addClass('active');
         var code = $(this).data('id');
-      
+        getDetail(code);
         getShapes(code);
         $("#popup").show();
     });
