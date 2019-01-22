@@ -177,7 +177,7 @@ a.navbar-brand {
 }
 
 .tree {
-    height: 533px;
+    height: 85vh;
     overflow-y: scroll;
     padding: 19px 0px !important;
 }

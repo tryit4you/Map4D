@@ -6,16 +6,38 @@
 @section scripts{
     <script src="~/Assets/js/drawpolygon.js"></script>
 }
-
+<style>
+    #mapzzz {
+        position: fixed !important;
+        width: 54% !important;
+        height: 85% !important;
+    }
+</style>
 <div class="row">
-    <div class="col-sm-3 col-md-3 col-lg-3" >
+    <div class="col-sm-3 col-md-3 col-lg-3">
         @{ Html.RenderAction("GetAllDataPartial", "DrawPolygon");}
     </div>
  
     <div class="col-sm-7 col-md-7 col-lg-7">
-        <div id="xinkciti-map" style="height: 533px; width: 95%; position: absolute;"></div>
+        <div id="xinkciti-map"></div>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2">
         <table id="popup" class="table" style="margin-left:-25px"></table>
     </div>
 </div>
+<br />
+<script id="city-template" type="x-tmpl-mustache">
+    <li class="list-group-item" style="padding: 3px 0px;border: none;">
+        <a href="#" aria-expanded="true" class="polygonItems" data-city="{{cityId}}" data-id="{{code}}"><span class="glyphicon glyphicon-chevron-right"></span> {{name}}</a>
+    </li>
+</script>
+<script id="dictrict-template" type="x-tmpl-mustache">
+    <li class="list-group-item" style="padding: 3px 0px;border: none;">
+        <a href="#" aria-expanded="true" class="polygonItems-dictrict" data-dictrict="{{dictrictId}}" data-id="{{code}}">{{name}}</a>
+    </li>
+</script>
+<script id="ward-template" type="x-tmpl-mustache">
+    <li class="list-group-item" style="padding: 3px 0px;border: none;">
+        <a href="#" aria-expanded="true" class="polygonItems-ward" data-ward="{{wardId}}" data-id="{{code}}">{{name}}</a>
+    </li>
+</script>
