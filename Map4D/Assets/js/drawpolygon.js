@@ -21,8 +21,9 @@
         e.stopPropagation();
     });
     $('.level1').find("ul").hide();
- 
-
+    $('.tree').ready(function () {
+        $('.tree').fadeIn(2000);
+    });
 });
 
 
