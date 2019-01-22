@@ -13,6 +13,8 @@
 </head>
 <body>
 
+    <div class="content">
+
 
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -31,9 +33,6 @@
 
         </div>
         <div class="container-fluid">
-
-
-            <hr />
             @RenderBody()
         </div>
     </div>
@@ -48,12 +47,6 @@
     <script src="http://map.map4d.vn/build/mapgl.bundle.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    <script>
-        $(document).ready(
-            $('.preload').fadeOut(1000, function () {
-                $('.content').fadeIn(1000);
-            })
-            )
-    </script>
+
 </body>
 </html>

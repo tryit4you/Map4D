@@ -5,8 +5,6 @@
     $("#popup").hide();
    
    // loadTreeList();
-
-
     $('.tree li:has(ul)').addClass('parent_li').find(' > span');
     $('.tree li.parent_li > span').on('click', function (e) {
         var children = $(this).parent('li.parent_li').find(' > ul > li');
@@ -21,8 +19,9 @@
         e.stopPropagation();
     });
     $('.level1').find("ul").hide();
- 
-
+    $('.tree').ready(function () {
+        $('.tree').fadeIn(2000);
+    });
 });
 
 

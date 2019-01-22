@@ -10,10 +10,11 @@
     #mapzzz {
         position: fixed !important;
         width: 54% !important;
-        height: 85% !important;
+        height: 92% !important;
+        margin-left: -30px !important;
     }
 </style>
-<div class="row">
+<div class="row" style="margin-top:1px">
     <div class="col-sm-3 col-md-3 col-lg-3">
         @{ Html.RenderAction("GetAllDataPartial", "DrawPolygon");}
     </div>
@@ -22,6 +23,7 @@
         <div id="xinkciti-map"></div>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2">
-        <table id="popup" class="table" style="margin-left:-25px"></table>
+        <table id="popup" class="table" style="margin-left:-65px"></table>
     </div>
 </div>
+<br />
