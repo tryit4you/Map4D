@@ -15,6 +15,7 @@ namespace Map4D.Data.DAO
         {
             string connection = AdoHelper.ConnectionString;
             helper = new AdoHelper(connection);
+
         }
         /// <summary>
         /// Get allData in VietNam
@@ -119,7 +120,7 @@ namespace Map4D.Data.DAO
             string sqlQuery = "SELECT * FROM Countries WHERE ParentId = @ParentId ORDER BY Name";
             object[] _params = new object[] { new SqlParameter("ParentId", IdCity.ToString()) };
 
-            SqlDataReader reader = helper.ExecDataReader(sqlQuery,_params);
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery, _params);
             while (reader.Read())
             {
                 CountriesViewModel District = new CountriesViewModel
@@ -152,13 +153,13 @@ namespace Map4D.Data.DAO
             string sqlQuery = "SELECT * FROM Countries WHERE ParentId = @ParentId ORDER BY Name";
             object[] _params = new object[] { new SqlParameter("ParentId", IdDistrict.ToString()) };
 
-            SqlDataReader reader = helper.ExecDataReader(sqlQuery,_params);
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery, _params);
             while (reader.Read())
             {
                 CountriesViewModel Ward = new CountriesViewModel
                 {
                     Id = int.Parse(reader["Id"].ToString()),
-                    Code=reader["Code"].ToString(),
+                    Code = reader["Code"].ToString(),
                     Name = reader["Name"].ToString(),
                     Description = reader["Description"].ToString(),
                     Level = int.Parse(reader["Level"].ToString()),
@@ -185,7 +186,7 @@ namespace Map4D.Data.DAO
             string sqlQuery = "EXEC GetDuLieuDoiTuongByCode @Code = @_Code";
             object[] _params = new object[] { new SqlParameter("_Code", Code) };
 
-            SqlDataReader reader = helper.ExecDataReader(sqlQuery,_params);
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery, _params);
             if (reader.Read())
             {
                 objectData = reader["DuLieuDoiTuong"].ToString();
@@ -205,7 +206,7 @@ namespace Map4D.Data.DAO
             string sqlQuery = "EXEC GetPointCenterByCode @Code = @_Code";
             object[] _params = new object[] { new SqlParameter("_Code", Code) };
 
-            SqlDataReader reader = helper.ExecDataReader(sqlQuery,_params);
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery, _params);
             if (reader.Read())
             {
                 double Lat = double.Parse(reader["Lat"].ToString());

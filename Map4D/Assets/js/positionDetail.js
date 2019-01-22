@@ -7,8 +7,8 @@ $(function () {
 //Hàm khởi tạo bản đồ với tham số lat,lng
 function InitialMap(lat, lng, message) {
     var paramMapDefault = {
-        lat: lat,
-        lng: lng,
+        lat: 16.036918,
+        lng: 108.218510,
         zoom: 8,
         mode: "2d"
     };
@@ -26,6 +26,7 @@ function InitialMap(lat, lng, message) {
     map.leaflet.on('click', function (e) {
         getPolygonDetail(e.latlng.lat, e.latlng.lng);
     });
+   
 }
 
 //Hàm hiển thị popup lên map
