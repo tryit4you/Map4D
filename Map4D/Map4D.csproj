@@ -150,7 +150,6 @@
   <ItemGroup>
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\js\drawpolygon.js" />
-    <Content Include="Assets\js\mustache.min.js" />
     <Content Include="Assets\js\positionDetail.js" />
     <Content Include="Assets\uploads\city.jpg" />
     <Content Include="Assets\uploads\leaf-orange.png" />
