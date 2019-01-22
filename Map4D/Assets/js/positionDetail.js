@@ -7,8 +7,8 @@ $(function () {
 //Hàm khởi tạo bản đồ với tham số lat,lng
 function InitialMap(lat, lng, message) {
     var paramMapDefault = {
-        lat: lat,
-        lng: lng,
+        lat: 16.036918,
+        lng: 108.218510,
         zoom: 8,
         mode: "2d"
     };
@@ -26,12 +26,7 @@ function InitialMap(lat, lng, message) {
     map.leaflet.on('click', function (e) {
         getPolygonDetail(e.latlng.lat, e.latlng.lng);
     });
-    if (message !== undefined) {
-        L.popup()
-            .setLatLng([lat, lng])
-            .setContent(message)
-            .openOn(map.leaflet);
-    }
+   
 }
 
 //Hàm hiển thị popup lên map
@@ -51,7 +46,12 @@ function getPolygonDetail(lat, lng) {
             } else {
                 message = "<div style='display: inline-flex;'><div style='margin-right: 5px;'><img style='height: 30px;width: 30px;max-width: none;' src='/Assets/uploads/view.png' /></div><div><b>" + res.details.Ward + "," + res.details.District + "," + res.details.City + "</b><br/>" + lat + "," + lng + "</div>";
             }
-            InitialMap(lat, lng, message);
+            if (message !== undefined) {
+                L.popup()
+                    .setLatLng([lat, lng])
+                    .setContent(message)
+                    .openOn(map.leaflet);
+            }
         }
     });
 }
