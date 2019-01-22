@@ -1,12 +1,9 @@
 ﻿$(function () {
+    $('#DetailObjectProperties').hide();
     register();
     //Khởi tạo bản đồ với tham số mặc định
     InitialMap(16.036918, 108.218510,8);
-    $("#popup").hide();
-   
    // loadTreeList();
-
-
     $('.tree li:has(ul)').addClass('parent_li').find(' > span');
     $('.tree li.parent_li > span').on('click', function (e) {
         var children = $(this).parent('li.parent_li').find(' > ul > li');
@@ -21,15 +18,10 @@
         e.stopPropagation();
     });
     $('.level1').find("ul").hide();
- 
-
+    $('.tree').ready(function () {
+        $('.tree').fadeIn(2000);
+    });
 });
-
-
-function hidePopup() {
-    $("#popup").hide();
-}
-
 //Hàm khởi tạo bản đồ với tham số lat,lng
 function InitialMap(lat, lng,zoom) {
     var paramMapDefault = {
@@ -54,7 +46,9 @@ function InitialMap(lat, lng,zoom) {
 
 //Hàm khởi tạo sự kiện khi click, hoặc thao tác với giao diện
 function register() {
-    //$('#modalDetail').modal({ backdrop: 'static', keyboard: false });
+    $('#close-popup').click(function () {
+        $('#DetailObjectProperties').fadeOut(1000);
+    });
     $('.polygonItems').off('click').on('click', function (e) {
         $('.polygonItems').removeClass('active');
         //e.preventDefault();
@@ -62,8 +56,7 @@ function register() {
         var cityId = $(this).data('city');
         $(this).addClass('active');
         getDetail(code);
-        //$('#modalDetail').modal('show');
-        $("#popup").show();
+        $('#DetailObjectProperties').show();
 
         getShapes(code);
     });
@@ -74,7 +67,7 @@ function register() {
         $(this).addClass('active');
         getDetail(code);
         getShapes(code);
-        $("#popup").show();
+        $('#DetailObjectProperties').show();
     });
     $('.polygonItems-ward').off('click').on('click', function (e) {
         $('.polygonItems-ward').removeClass('active');
@@ -83,7 +76,7 @@ function register() {
         var code = $(this).data('id');
         getDetail(code);
         getShapes(code);
-        $("#popup").show();
+        $('#DetailObjectProperties').show();
     });
     $("#menu-close").on('click', function (e) {
         e.preventDefault();
@@ -147,9 +140,10 @@ function getDetail(code) {
         data: { code: code },
         dataType: 'json',
         success: function (res) {
-            $('#popup').html('');
+            $('#DetailObjectProperties').html('');
             var html = res.htmlCode;
-            $('#popup').html(html);
+            $('#DetailObjectProperties').html(html);
+            register();
         }
     });
 }

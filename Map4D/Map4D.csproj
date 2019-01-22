@@ -148,6 +148,7 @@
     <Compile Include="ViewModels\PointViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\DetailObjectProperties.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\js\drawpolygon.js" />
     <Content Include="Assets\js\positionDetail.js" />
