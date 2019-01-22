@@ -9,31 +9,37 @@
     <link href="/assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css">
-    @Styles.Render("~/Content/css")
+
 </head>
 <body>
-
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">Map4D</a>
+    <div class="preload">
+        <img src="~/Assets/uploads/loading-page.gif" alt="Loading page..." />
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Trang chủ</a></li>
-
-            <li><a href="/dia-diem">Thông tin địa điểm</a></li>
-        </ul>
-
-    </div>
-    <div class="container-fluid">
+    <div class="content">
 
 
-        <hr />
-                @RenderBody()
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Map4D</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Trang chủ</a></li>
+
+                <li><a href="/dia-diem">Thông tin địa điểm</a></li>
+            </ul>
+
+        </div>
+        <div class="container-fluid">
+
+
+            <hr />
+            @RenderBody()
+        </div>
     </div>
     <!--  Scripts-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -46,5 +52,12 @@
     <script src="http://map.map4d.vn/build/mapgl.bundle.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(
+            $('.preload').fadeOut(1000, function () {
+                $('.content').fadeIn(1000);
+            })
+            )
+    </script>
 </body>
 </html>

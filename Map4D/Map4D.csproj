@@ -153,6 +153,7 @@
     <Content Include="Assets\js\positionDetail.js" />
     <Content Include="Assets\uploads\city.jpg" />
     <Content Include="Assets\uploads\leaf-orange.png" />
+    <Content Include="Assets\uploads\loading-page.gif" />
     <Content Include="Assets\uploads\page-loader.gif" />
     <Content Include="Assets\uploads\view.png" />
     <Content Include="Content\bootstrap-theme.css" />
