@@ -135,6 +135,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CalculatorHelper.cs" />
     <Compile Include="ViewModels\CountriesViewModel.cs" />
     <Compile Include="ViewModels\InfoPointViewModel.cs" />
     <Compile Include="ViewModels\PolygonDetailViewModel.cs" />
@@ -150,6 +151,8 @@
   <ItemGroup>
     <Content Include="Assets\css\DetailObjectProperties.css" />
     <Content Include="Assets\css\style.css" />
+    <Content Include="Assets\css\toastr.css" />
+    <Content Include="Assets\js\toastr.min.js" />
     <Content Include="Assets\js\drawpolygon.js" />
     <Content Include="Assets\js\positionDetail.js" />
     <Content Include="Assets\uploads\city.jpg" />

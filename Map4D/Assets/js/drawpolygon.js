@@ -1,4 +1,4 @@
-﻿var draw ;
+﻿var draw;
 $(function () {
     $('#DetailObjectProperties').hide();
     register();
