@@ -57,7 +57,7 @@ namespace Map4D.Data.DAO
         private List<PolygonDetailViewModel> GetDetailByLatLng(string Lat, string Lng)
         {
             List<PolygonDetailViewModel> listPolygonDetails = new List<PolygonDetailViewModel>();
-            string sqlQuery = "EXEC XacDinhToaDo @lat = @_Lat ,@lng = @_Lng";
+            string sqlQuery = "EXEC XacDinhToaDoOptimize @lat = @_Lat ,@lng = @_Lng";
             object[] _params = new object[] { new SqlParameter("_Lat", Lat), new SqlParameter("_Lng", Lng) };
 
             SqlDataReader reader = helper.ExecDataReader(sqlQuery,_params);
