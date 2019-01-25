@@ -202,3 +202,10 @@ a.navbar-brand {
     ::-webkit-scrollbar-thumb:hover {
         background: #1e88e5;
     }
+.col-md-12.optimizeRad {
+    position: absolute;
+    z-index: 10;
+    left: -10px;
+    /* top: 44px; */
+    color: rgba(74, 74, 255, 0.6705882352941176);
+}

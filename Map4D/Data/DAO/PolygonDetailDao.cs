@@ -1,7 +1,9 @@
 ﻿using CommonLogger.Libraries;
+using Map4D.Helper;
 using Map4D.ViewModels;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace Map4D.Data.DAO
 {
@@ -22,13 +24,29 @@ namespace Map4D.Data.DAO
         /// <param name="Lat">Latitude</param>
         /// <param name="Lng">Longitude</param>
         /// <returns>InfoPointViewModel : City,District,Ward</returns>
-        public InfoPointViewModel GetInfoPointByLatLng(string Lat, string Lng)
+        public InfoPointViewModel GetInfoPointByLatLngOptimize(string Lat, string Lng,out long timeQuery)
         {
-            List<PolygonDetailViewModel> listDetail = GetDetailByLatLng(Lat, Lng);
+            List<PolygonDetailViewModel> listDetail = GetDetailByLatLngOptimize(Lat, Lng,out timeQuery);
             PointViewModel pointCheck = new PointViewModel() { Lng = double.Parse(Lng), Lat = double.Parse(Lat) };
             foreach (PolygonDetailViewModel polygon in listDetail)
             {
-                bool result = CheckExistPointInPolygon(polygon, pointCheck);
+                List<PointViewModel> listPointTop = CalculatorHelper.ConvertObjectDataToListPoint(polygon.ObjectData);
+                bool result = CheckWithListPoint(listPointTop, pointCheck);
+                if (result)
+                {
+                    return GetInfoPointByWardCode(polygon.Value);
+                }
+            }
+            return null;
+        }
+        public InfoPointViewModel GetInfoPointByLatLngUnOptimize(string Lat, string Lng,out long timeQuery)
+        {
+            List<PolygonDetailViewModel> listDetail = GetDetailByLatLngUnOptimize(Lat, Lng,out timeQuery);
+            PointViewModel pointCheck = new PointViewModel() { Lng = double.Parse(Lng), Lat = double.Parse(Lat) };
+            foreach (PolygonDetailViewModel polygon in listDetail)
+            {
+                List<PointViewModel> listPointTop = CalculatorHelper.ConvertObjectDataToListPoint(polygon.ObjectData);
+                bool result = CheckWithListPoint(listPointTop, pointCheck);
                 if (result)
                 {
                     return GetInfoPointByWardCode(polygon.Value);
@@ -54,9 +72,10 @@ namespace Map4D.Data.DAO
         /// <param name="Lat">Latitude</param>
         /// <param name="Lng">Longitude</param>
         /// <returns>List<PolygonDetailViewModel> : Id,ObjectData,Value</returns>
-        private List<PolygonDetailViewModel> GetDetailByLatLng(string Lat, string Lng)
+        private List<PolygonDetailViewModel> GetDetailByLatLngUnOptimize(string Lat, string Lng,out long timeQueryMessage)
         {
             List<PolygonDetailViewModel> listPolygonDetails = new List<PolygonDetailViewModel>();
+            var watch = Stopwatch.StartNew();
             string sqlQuery = "EXEC XacDinhToaDo @lat = @_Lat ,@lng = @_Lng";
             object[] _params = new object[] { new SqlParameter("_Lat", Lat), new SqlParameter("_Lng", Lng) };
 
@@ -71,6 +90,31 @@ namespace Map4D.Data.DAO
                 };
                 listPolygonDetails.Add(Ward);
             }
+            timeQueryMessage= watch.ElapsedMilliseconds;
+            reader.Close();
+
+            return listPolygonDetails;
+        }
+        private List<PolygonDetailViewModel> GetDetailByLatLngOptimize(string Lat, string Lng,out long timeQuery)
+        {
+
+            List<PolygonDetailViewModel> listPolygonDetails = new List<PolygonDetailViewModel>();
+            var watch = Stopwatch.StartNew();
+            string sqlQuery = "EXEC Optimize @lat = @_Lat ,@lng = @_Lng";
+            object[] _params = new object[] { new SqlParameter("_Lat", Lat), new SqlParameter("_Lng", Lng) };
+
+            SqlDataReader reader = helper.ExecDataReader(sqlQuery, _params);
+            while (reader.Read())
+            {
+                PolygonDetailViewModel Ward = new PolygonDetailViewModel
+                {
+                    Id = reader["Id"].ToString(),
+                    ObjectData = reader["DuLieuDoiTuong"].ToString(),
+                    Value = reader["Value"].ToString()
+                };
+                listPolygonDetails.Add(Ward);
+            }
+            timeQuery= watch.ElapsedMilliseconds;
             reader.Close();
 
             return listPolygonDetails;
@@ -143,34 +187,13 @@ namespace Map4D.Data.DAO
         /// <param name="polygon">PolygonDetail: Id,ObjectData,Value</param>
         /// <param name="pointCheck">PointCheck exist in Polygon : Lat,Lng</param>
         /// <returns>True : Exist, False : Non-exist</returns>
-        private bool CheckExistPointInPolygon(PolygonDetailViewModel polygon,PointViewModel pointCheck)
-        {
-            List<PointViewModel> listPointTop = ConvertObjectDataToListPoint(polygon.ObjectData);
-            return CheckWithListPoint(listPointTop, pointCheck);
-        }
+      
         /// <summary>
         /// Convert ObjectData to ListPoint
         /// </summary>
         /// <param name="ObjectData">ObjectData for PolygonDetail</param>
         /// <returns>List<PointViewModel> : List vertices of Polygon</returns>
-        private List<PointViewModel> ConvertObjectDataToListPoint(string ObjectData)
-        {
-            List<PointViewModel> listPoint = new List<PointViewModel>();
-            ObjectData = ObjectData.Substring(ObjectData.IndexOf("[[") + 3, ObjectData.LastIndexOf("]]") - ObjectData.IndexOf("[[") - 4);
-            string[] listSplit = ObjectData.Split('[', ']');
-
-            foreach (string split in listSplit)
-            {
-                if (split.Length > 1)
-                {
-                    double Lng = double.Parse(split.Split(',')[0]);
-                    double Lat = double.Parse(split.Split(',')[1]);
-                    listPoint.Add(new PointViewModel() { Lng = Lng, Lat = Lat });
-                }
-            }
-
-            return listPoint;
-        }
+      
         /// <summary>
         /// Check Exitst with ListPoint
         /// </summary>
@@ -186,15 +209,19 @@ namespace Map4D.Data.DAO
             // Ray-Casting
             for (i = 0, j = countListPoint - 1; i < countListPoint; j = i++)
             {
-                if (((listPoint[i].Lat > pointCheck.Lat) != (listPoint[j].Lat > pointCheck.Lat)) &&
-                 (pointCheck.Lng < (listPoint[j].Lng - listPoint[i].Lng) * (pointCheck.Lat - listPoint[i].Lat)/(listPoint[j].Lat - listPoint[i].Lat) + listPoint[i].Lng))
+                if (listPoint[i].Lng>=pointCheck.Lng)
                 {
-                    result = !result;
+                    if (((listPoint[i].Lat > pointCheck.Lat) != (listPoint[j].Lat > pointCheck.Lat)) &&
+                     (pointCheck.Lng < (listPoint[j].Lng - listPoint[i].Lng) * (pointCheck.Lat - listPoint[i].Lat) / (listPoint[j].Lat - listPoint[i].Lat) + listPoint[i].Lng))
+                    {
+                        result = !result;
+                    }
                 }
             }
 
             return result;
         }
+        
         /// <summary>
         /// Get PopupHtml by Code
         /// </summary>

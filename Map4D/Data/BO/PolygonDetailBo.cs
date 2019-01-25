@@ -21,9 +21,13 @@ namespace Map4D.Data.BO
         /// <param name="Lat">Latitude</param>
         /// <param name="Lng">Longitude</param>
         /// <returns>InfoPointViewModel : City,District,Ward</returns>
-        public InfoPointViewModel GetInfoPointByLatLng(string Lat, string Lng)
+        public InfoPointViewModel GetInfoPointByLatLngOptimize(string Lat, string Lng,out long timeQuery)
         {
-            return polygonDetailDao.GetInfoPointByLatLng(Lat, Lng);
+            return polygonDetailDao.GetInfoPointByLatLngOptimize(Lat, Lng,out timeQuery);
+        }
+        public InfoPointViewModel GetInfoPointByLatLngUnOptimize(string Lat, string Lng, out long timeQuery)
+        {
+            return polygonDetailDao.GetInfoPointByLatLngUnOptimize(Lat, Lng,out timeQuery);
         }
         /// <summary>
         /// Get PopupHtml by Code
