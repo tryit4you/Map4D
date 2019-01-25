@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿var draw ;
+$(function () {
     $('#DetailObjectProperties').hide();
     register();
     //Khởi tạo bản đồ với tham số mặc định
@@ -91,13 +92,15 @@ function register() {
 //Hàm vẽ đường viền của tỉnh thành phố, quận huyện...
 //shapes tham số là dữ liệu để vẽ vào leafletjs
 function drawPolygon(shapes, pointCenter,zoom) {
-    InitialMap(pointCenter.Lat, pointCenter.Lng,zoom);
+    map.leaflet.setView(new L.LatLng(pointCenter.Lat, pointCenter.Lng), zoom);
+    if (draw !== undefined) {
+        map.leaflet.removeLayer(draw);
+    }
     var jsonObj = JSON.parse(shapes);
-    var draw = new L.GeoJSON(jsonObj);
+    geojs = jsonObj;
+    draw = new L.GeoJSON(jsonObj);
     map.leaflet.addLayer(draw);
 }
-
-
 //Hàm lấy dữ liệu truyền vào hàm vẽ
 function getShapes(code) {
     var zoom = 0;
