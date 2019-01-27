@@ -4,6 +4,7 @@ using Map4D.ViewModels;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Map4D.Data.DAO
 {
@@ -24,7 +25,7 @@ namespace Map4D.Data.DAO
         /// <param name="Lat">Latitude</param>
         /// <param name="Lng">Longitude</param>
         /// <returns>InfoPointViewModel : City,District,Ward</returns>
-        public InfoPointViewModel GetInfoPointByLatLngOptimize(string Lat, string Lng,out long timeQuery)
+        public InfoPointViewModel GetInfoPointByLatLng(string Lat, string Lng,out long timeQuery)
         {
             List<PolygonDetailViewModel> listDetail = GetDetailByLatLngOptimize(Lat, Lng,out timeQuery);
             PointViewModel pointCheck = new PointViewModel() { Lng = double.Parse(Lng), Lat = double.Parse(Lat) };
@@ -114,7 +115,7 @@ namespace Map4D.Data.DAO
                 };
                 listPolygonDetails.Add(Ward);
             }
-            timeQuery= watch.ElapsedMilliseconds;
+            timeQuery = watch.ElapsedMilliseconds;
             reader.Close();
 
             return listPolygonDetails;

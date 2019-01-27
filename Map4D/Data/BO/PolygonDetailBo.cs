@@ -23,7 +23,7 @@ namespace Map4D.Data.BO
         /// <returns>InfoPointViewModel : City,District,Ward</returns>
         public InfoPointViewModel GetInfoPointByLatLngOptimize(string Lat, string Lng,out long timeQuery)
         {
-            return polygonDetailDao.GetInfoPointByLatLngOptimize(Lat, Lng,out timeQuery);
+            return polygonDetailDao.GetInfoPointByLatLng(Lat, Lng,out timeQuery);
         }
         public InfoPointViewModel GetInfoPointByLatLngUnOptimize(string Lat, string Lng, out long timeQuery)
         {
