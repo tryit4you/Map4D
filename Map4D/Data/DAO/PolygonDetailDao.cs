@@ -212,8 +212,9 @@ namespace Map4D.Data.DAO
             {
                 if (listPoint[i].Lng>=pointCheck.Lng)
                 {
+                    double giaodiem= (listPoint[j].Lng - listPoint[i].Lng) * (pointCheck.Lat - listPoint[i].Lat) / (listPoint[j].Lat - listPoint[i].Lat) + listPoint[i].Lng;
                     if (((listPoint[i].Lat > pointCheck.Lat) != (listPoint[j].Lat > pointCheck.Lat)) &&
-                     (pointCheck.Lng < (listPoint[j].Lng - listPoint[i].Lng) * (pointCheck.Lat - listPoint[i].Lat) / (listPoint[j].Lat - listPoint[i].Lat) + listPoint[i].Lng))
+                     (pointCheck.Lng < giaodiem))
                     {
                         result = !result;
                     }
