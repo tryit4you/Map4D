@@ -1,4 +1,5 @@
-﻿var draw;
+﻿var geojs;
+var myLayer;
 $(function () {
     $('#DetailObjectProperties').hide();
     register();
@@ -42,6 +43,7 @@ function InitialMap(lat, lng,zoom) {
         ]
     };
     map = MapGL.initMap("xinkciti-map", paramMap);
+    myLayer = new L.GeoJSON().addTo(map.leaflet);
   
 }
 
@@ -91,15 +93,23 @@ function register() {
 
 //Hàm vẽ đường viền của tỉnh thành phố, quận huyện...
 //shapes tham số là dữ liệu để vẽ vào leafletjs
-function drawPolygon(shapes, pointCenter,zoom) {
-    map.leaflet.setView(new L.LatLng(pointCenter.Lat, pointCenter.Lng), zoom);
-    if (draw !== undefined) {
-        map.leaflet.removeLayer(draw);
+function drawPolygon(shapes, pointCenter, zoom) {
+    if (pointCenter != null) {
+        map.leaflet.setView(new L.LatLng(pointCenter.Lat, pointCenter.Lng), zoom);
     }
-    var jsonObj = JSON.parse(shapes);
-    geojs = jsonObj;
-    draw = new L.GeoJSON(jsonObj);
-    map.leaflet.addLayer(draw);
+    if (geojs !== undefined) {
+        $.each(myLayer.getLayers(), function (i, data) {
+            if (data.feature.properties.id === geojs.properties.id) {
+                console.log("Remove: " + data.feature.properties.id);
+                data.removeFrom(myLayer);
+            }
+        });
+    }
+    if (shapes.length != 0) {
+        var jsonObj = JSON.parse(shapes);
+        geojs = jsonObj;
+        myLayer.addData(geojs);
+    }
 }
 //Hàm lấy dữ liệu truyền vào hàm vẽ
 function getShapes(code) {
@@ -118,7 +128,7 @@ function getShapes(code) {
                     zoom = 8;
                     break;
                 case 9:
-                    zoom = 12;
+                    zoom = 10;
                     break;
                 case 12:
                     zoom = 14;
@@ -129,7 +139,6 @@ function getShapes(code) {
             }
             var shapes = res.shapes;
             var pointCenter = res.pointCenter;
-            console.log(zoom);
             drawPolygon(shapes, pointCenter, zoom);
         }
     });
