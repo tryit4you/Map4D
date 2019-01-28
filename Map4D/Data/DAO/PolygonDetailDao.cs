@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Map4D.Data.DAO
 {
-    public class PolygonDetailDao
+    public class PolygonDetailDao : AdoHelper
     {
         private AdoHelper helper = null;
         /// <summary>
@@ -93,7 +93,7 @@ namespace Map4D.Data.DAO
             }
             timeQueryMessage= watch.ElapsedMilliseconds;
             reader.Close();
-
+            _conn.Close();
             return listPolygonDetails;
         }
         private List<PolygonDetailViewModel> GetDetailByLatLngOptimize(string Lat, string Lng,out long timeQuery)
@@ -117,7 +117,7 @@ namespace Map4D.Data.DAO
             }
             timeQuery = watch.ElapsedMilliseconds;
             reader.Close();
-
+            _conn.Close();
             return listPolygonDetails;
         }
         /// <summary>
@@ -138,7 +138,7 @@ namespace Map4D.Data.DAO
                 City = reader["Name"].ToString();
             }
             reader.Close();
-
+            _conn.Close();
             return City;
         }
         /// <summary>
@@ -159,7 +159,7 @@ namespace Map4D.Data.DAO
                 District = reader["Name"].ToString();
             }
             reader.Close();
-
+            _conn.Close();
             return District;
         }
         /// <summary>
@@ -179,7 +179,7 @@ namespace Map4D.Data.DAO
                 Ward = reader["Name"].ToString();
             }
             reader.Close();
-
+            _conn.Close();
             return Ward;
         }
         /// <summary>

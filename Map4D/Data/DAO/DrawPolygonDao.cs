@@ -45,6 +45,7 @@ namespace Map4D.Data.DAO
                 allData.Add(Data);
             }
             reader.Close();
+            _conn.Close();
 
             return allData;
         }
@@ -76,7 +77,7 @@ namespace Map4D.Data.DAO
                 listCity.Add(City);
             }
             reader.Close();
-
+            _conn.Close();
             return listCity;
         }
         /// <summary>
@@ -107,6 +108,7 @@ namespace Map4D.Data.DAO
                 listByLevel.Add(data);
             }
             reader.Close();
+            _conn.Close();
             return listByLevel;
         }
         /// <summary>
@@ -139,7 +141,7 @@ namespace Map4D.Data.DAO
                 listDistrict.Add(District);
             }
             reader.Close();
-
+            _conn.Close();
             return listDistrict;
         }
         /// <summary>
@@ -172,7 +174,7 @@ namespace Map4D.Data.DAO
                 listWard.Add(Ward);
             }
             reader.Close();
-
+            _conn.Close();
             return listWard;
         }
         /// <summary>
@@ -192,7 +194,7 @@ namespace Map4D.Data.DAO
                 objectData = reader["DuLieuDoiTuong"].ToString();
             }
             reader.Close();
-
+            _conn.Close();
             return objectData;
         }
         /// <summary>
@@ -214,7 +216,7 @@ namespace Map4D.Data.DAO
                 pointCenter = new PointViewModel() { Lat = Lat, Lng = Lng };
             }
             reader.Close();
-
+            _conn.Close();
             return pointCenter;
         }
     }
