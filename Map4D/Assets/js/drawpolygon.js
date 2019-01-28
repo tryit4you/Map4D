@@ -1,4 +1,5 @@
-﻿var draw;
+﻿var geojs;
+var myLayer;
 $(function () {
     $('#DetailObjectProperties').hide();
     register();
@@ -42,6 +43,7 @@ function InitialMap(lat, lng,zoom) {
         ]
     };
     map = MapGL.initMap("xinkciti-map", paramMap);
+    myLayer = new L.GeoJSON().addTo(map.leaflet);
   
 }
 
@@ -93,13 +95,17 @@ function register() {
 //shapes tham số là dữ liệu để vẽ vào leafletjs
 function drawPolygon(shapes, pointCenter,zoom) {
     map.leaflet.setView(new L.LatLng(pointCenter.Lat, pointCenter.Lng), zoom);
-    if (draw !== undefined) {
-        map.leaflet.removeLayer(draw);
+    if (geojs !== undefined) {
+        $.each(myLayer.getLayers(), function (i, data) {
+            if (data.feature.properties.id === geojs.properties.id) {
+                console.log("Remove: " + data.feature.buildings.name);
+                myLayer.removeLayer(data);
+            }
+        });
     }
     var jsonObj = JSON.parse(shapes);
     geojs = jsonObj;
-    draw = new L.GeoJSON(jsonObj);
-    map.leaflet.addLayer(draw);
+    myLayer.addData(geojs);
 }
 //Hàm lấy dữ liệu truyền vào hàm vẽ
 function getShapes(code) {
