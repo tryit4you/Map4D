@@ -1,10 +1,11 @@
-﻿var draw;
+﻿var geojs;
+var myLayer;
 $(function () {
     $('#DetailObjectProperties').hide();
     register();
     //Khởi tạo bản đồ với tham số mặc định
-    InitialMap(16.036918, 108.218510,8);
-   // loadTreeList();
+    InitialMap(16.036918, 108.218510, 8);
+    // loadTreeList();
     $('.tree li:has(ul)').addClass('parent_li').find(' > span');
     $('.tree li.parent_li > span').on('click', function (e) {
         var children = $(this).parent('li.parent_li').find(' > ul > li');
@@ -24,7 +25,7 @@ $(function () {
     });
 });
 //Hàm khởi tạo bản đồ với tham số lat,lng
-function InitialMap(lat, lng,zoom) {
+function InitialMap(lat, lng, zoom) {
     var paramMapDefault = {
         lat: lat,
         lng: lng,
@@ -42,7 +43,8 @@ function InitialMap(lat, lng,zoom) {
         ]
     };
     map = MapGL.initMap("xinkciti-map", paramMap);
-  
+    myLayer = new L.GeoJSON().addTo(map.leaflet);
+
 }
 
 //Hàm khởi tạo sự kiện khi click, hoặc thao tác với giao diện
@@ -56,28 +58,39 @@ function register() {
         var code = $(this).data('id');
         var cityId = $(this).data('city');
         $(this).addClass('active');
-        getDetail(code);
-        $('#DetailObjectProperties').show();
+        setTimeout(function () {
+           
+            getDetail(code);
+            $('#DetailObjectProperties').show();
 
-        getShapes(code);
+            getShapes(code);
+
+        }, 200);
+       
     });
-    $('.polygonItems-district').off('click').on('click', function (e) {
+    $('.polygonItems-district').off('click').delay(2000).on('click', function (e) {
         $('.polygonItems-dictrict').removeClass('active');
         e.preventDefault();
         var code = $(this).data('id');
         $(this).addClass('active');
-        getDetail(code);
-        getShapes(code);
-        $('#DetailObjectProperties').show();
-    });
-    $('.polygonItems-ward').off('click').on('click', function (e) {
+        setTimeout(function () {
+            getDetail(code);
+            getShapes(code);
+            $('#DetailObjectProperties').show();
+
+        }, 300);
+        });
+    $('.polygonItems-ward').off('click').delay(2000).on('click', function (e) {
         $('.polygonItems-ward').removeClass('active');
         e.preventDefault();
         $(this).addClass('active');
         var code = $(this).data('id');
-        getDetail(code);
-        getShapes(code);
-        $('#DetailObjectProperties').show();
+        setTimeout(function () {
+            getDetail(code);
+            getShapes(code);
+            $('#DetailObjectProperties').show();
+
+        }, 300);
     });
     $("#menu-close").on('click', function (e) {
         e.preventDefault();
@@ -91,15 +104,23 @@ function register() {
 
 //Hàm vẽ đường viền của tỉnh thành phố, quận huyện...
 //shapes tham số là dữ liệu để vẽ vào leafletjs
-function drawPolygon(shapes, pointCenter,zoom) {
-    map.leaflet.setView(new L.LatLng(pointCenter.Lat, pointCenter.Lng), zoom);
-    if (draw !== undefined) {
-        map.leaflet.removeLayer(draw);
+function drawPolygon(shapes, pointCenter, zoom) {
+    if (pointCenter !== null) {
+
+        map.leaflet.setView(new L.LatLng(pointCenter.Lat, pointCenter.Lng), zoom);
     }
-    var jsonObj = JSON.parse(shapes);
-    geojs = jsonObj;
-    draw = new L.GeoJSON(jsonObj);
-    map.leaflet.addLayer(draw);
+    if (geojs !== undefined) {
+        $.each(myLayer.getLayers(), function (i, data) {
+            if (data.feature.properties.id === geojs.properties.id) {
+                data.removeFrom(myLayer);
+            }
+        });
+    }
+    if (shapes.length !== 0) {
+        var jsonObj = JSON.parse(shapes);
+        geojs = jsonObj;
+        myLayer.addData(geojs);
+    }
 }
 //Hàm lấy dữ liệu truyền vào hàm vẽ
 function getShapes(code) {
@@ -112,16 +133,16 @@ function getShapes(code) {
         type: 'post',
         dataType: 'json',
         success: function (res) {
-  
+
             switch (code.length) {
                 case 6:
                     zoom = 8;
                     break;
                 case 9:
-                    zoom = 12;
+                    zoom = 10;
                     break;
                 case 12:
-                    zoom = 14;
+                    zoom = 12;
                     break;
                 default:
                     zoom = 8;
@@ -129,8 +150,13 @@ function getShapes(code) {
             }
             var shapes = res.shapes;
             var pointCenter = res.pointCenter;
-            console.log(zoom);
+
             drawPolygon(shapes, pointCenter, zoom);
+        },
+        error: function (error) {
+            toastr.error("Vui lòng không click quá nhanh");
+            location.reload();
+            return false;
         }
     });
 }
@@ -147,6 +173,11 @@ function getDetail(code) {
             var html = res.htmlCode;
             $('#DetailObjectProperties').html(html);
             register();
+        },
+        error: function (error) {
+            toastr.error("Vui lòng không click quá nhanh");
+            location.reload();
+            return false;
         }
     });
 }
