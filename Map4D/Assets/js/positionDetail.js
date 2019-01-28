@@ -31,15 +31,21 @@ function InitialMap(lat, lng, message) {
 
 //Hàm hiển thị popup lên map
 function getPolygonDetail(lat, lng) {
+    var optimizeValue = $("input:radio[name='optradio']:checked").val();
     $.ajax({
         url: '/polygondetail/GetDetailByLatLng',
         data: {
             lat: lat,
-            lng: lng
+            lng: lng,
+            optimizeValue: optimizeValue
         },
         type: 'post',
         dataType: 'json',
         success: function (res) {
+            var timeQuery = res.timeQuery;
+            if (timeQuery !== '') {
+                toastr.success("Thời gian thực hiện: " + timeQuery + "<sub>(ms)</sub>");
+            }
             var message = '';
             if (res.details.Ward === '' || res.details.District === '' || res.details.City === '') {
                 message = '<b>Chưa có địa điểm này trên bản đồ</b>';

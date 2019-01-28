@@ -1,4 +1,6 @@
 ﻿using Map4D.Data.BO;
+using Map4D.ViewModels;
+using System.Diagnostics;
 using System.Web.Mvc;
 
 namespace Map4D.Controllers
@@ -21,13 +23,24 @@ namespace Map4D.Controllers
         /// <param name="lat"></param>
         /// <param name="lng"></param>
         /// <returns></returns>
-        public JsonResult GetDetailByLatLng(string lat, string lng)
+        public JsonResult GetDetailByLatLng(string lat, string lng, string optimizeValue = "true")
         {
-            var details = polygonDetail.GetInfoPointByLatLng(lat, lng);
+            InfoPointViewModel details = null;
+            long timeQuery = 0;
+            if (optimizeValue.Equals("true"))
+            {
+
+                details = polygonDetail.GetInfoPointByLatLngOptimize(lat, lng,out timeQuery);
+            }
+            else
+            {
+                details = polygonDetail.GetInfoPointByLatLngUnOptimize(lat, lng,out timeQuery);
+            }
             return Json(new
             {
-                details
-            },JsonRequestBehavior.AllowGet);
+                details,
+                timeQuery
+            }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// Get Html Info Polygon by Code
@@ -40,7 +53,7 @@ namespace Map4D.Controllers
             return Json(new
             {
                 htmlCode = html
-            },JsonRequestBehavior.AllowGet);
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }
